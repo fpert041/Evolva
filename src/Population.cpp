@@ -8,3 +8,76 @@
 
 #include "Population.hpp"
 
+
+//--------------------------------------------------------------------------------------------
+// CONSTRUCTORS
+
+Population::Population(std::vector<std::string> originals){
+    usePredefined = false;
+    //individuals = std::vector<Individual>(originals.size());
+    
+    for(int i=0; i<originals.size(); ++i){
+        std::shared_ptr<Individual> newbie(new Individual(originals[i])); // initialise individual on the heap (using a smart pointer)
+        individuals.push_back(newbie); // push back individual's smart_pointer onto our vector of "individial"s on the stack
+    }
+}
+
+Population::Population(int popSize, bool init){
+    if(popSize < 2) popSize = 2; // minim population size
+    
+    usePredefined = false;
+    if(init){
+        if(usePredefined){
+            std::shared_ptr<Individual> alpha(new Individual("101010101010"));
+            std::shared_ptr<Individual> beta(new Individual("010010101101"));
+            
+            if(popSize%2 != 0) individuals.push_back(beta);
+            
+            for(int i=0; i<floor(popSize/2); ++i){
+                individuals.push_back(alpha); // push back individual's smart_pointer onto our vector of "individial"s on the stack
+                individuals.push_back(beta);
+            }
+        } else {
+            // Loop and create individuals
+            for (int i = 0; i < size(); i++)
+            {
+                std::shared_ptr<Individual> newbie(new Individual()); // initialise individual on the heap (using a smart pointer)
+                individuals.push_back(newbie); // push back individual's smart_pointer onto our vector of "individial"s on the stack
+            }
+        }
+    }
+}
+
+Population::Population(int popSize, std::string original){
+    usePredefined = false;
+    //individuals = std::vector<Individual>(popSize);
+    for (int i = 0; i < size(); i++)
+    {
+        std::shared_ptr<Individual> newbie(new Individual(original)); // initialise individual on the heap (using a smart pointer)
+        individuals.push_back(newbie);
+    }
+}
+
+//--------------------------------------------------------------------------------------------
+// DESTRUCTOR
+
+Population::~Population() {}
+
+
+//--------------------------------------------------------------------------------------------
+// INTERFACE
+
+// Get population size
+int Population::size()
+{
+    return individuals.size();
+}
+
+// Save given individual by replacing the content of the smart pointer at the index provided
+void Population::saveIndividual(int index, std::shared_ptr<Individual> alice)
+{
+    individuals[index].swap(alice);
+}
+
+
+

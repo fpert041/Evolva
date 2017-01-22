@@ -25,8 +25,6 @@ private:
     // Score
     int fitness = 0;
     
-protected:
-    
     int getFitness(Individual*);
     
 public:

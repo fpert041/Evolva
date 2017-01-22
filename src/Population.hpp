@@ -18,18 +18,21 @@
 class Population{
     
 private:
-    std::vector<Individual> individuals = std::vector<Individual>();
-    bool usePredefined = false;
-    
+    std::vector<std::shared_ptr<Individual> > individuals;
+    bool usePredefined;
+ 
+public:
     /*
-     * Constructors
+     * Constructors:
+     *  Create a population
      */
-    // Create a population
-    Population(std::string); // from original population string array
+    Population(std::vector<std::string>); // from an original population input as a vector of string
     
     Population(int , bool ); // from size and "usePredefined" value
     
     Population(int , std::string); // from constraining string value
+    
+    ~Population(); // DESTRUCTOR
     
     /* Getters */
     Individual getIndividual(int index); // return individuals[index];
@@ -41,8 +44,7 @@ private:
     int size(); // return individuals.length;
     
     // Save individual
-    void saveIndividual(int, Individual); // params: (index, indiv) => individuals[index] = indiv;
-
+    void saveIndividual(int, std::shared_ptr<Individual>); // params: (index, indiv) => individuals[index] = indiv;
     
 };
 

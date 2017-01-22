@@ -21,6 +21,8 @@ Individual::Individual(){
     
     genes = std::vector<int>(defaultGeneLength); // default genotype length
     
+    newBeing(); // random initialisation
+    
     srand(seed); /* seed random number generator */
 }
 
@@ -42,6 +44,13 @@ Individual::Individual(std::string genotype){
         }
     }
 }
+
+//--------------------------------------------------------------------------------------------
+
+// DESTRUCTOR
+
+Individual::~Individual(){}
+
 
 //--------------------------------------------------------------------------------------------
 

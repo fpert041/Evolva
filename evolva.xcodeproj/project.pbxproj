@@ -95,10 +95,10 @@
 				C76BF8F91E351BA800757B42 /* evolva.cpp */,
 				C76BF8F71E351BA800757B42 /* Evolution.cpp */,
 				C76BF8F81E351BA800757B42 /* Evolution.hpp */,
-				C76BF8FD1E351BA800757B42 /* Individual.cpp */,
-				C76BF8FE1E351BA800757B42 /* Individual.hpp */,
 				C76BF8FF1E351BA800757B42 /* Population.cpp */,
 				C76BF9001E351BA800757B42 /* Population.hpp */,
+				C76BF8FD1E351BA800757B42 /* Individual.cpp */,
+				C76BF8FE1E351BA800757B42 /* Individual.hpp */,
 				C76BF8FA1E351BA800757B42 /* FitnessFuncs.cpp */,
 				C76BF8FB1E351BA800757B42 /* FitnessFuncs.hpp */,
 			);
@@ -193,11 +193,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C76BF9071E351BA800757B42 /* Individual.cpp in Sources */,
 				C76BF9091E351BA800757B42 /* Population.cpp in Sources */,
 				C76BF9011E351BA800757B42 /* Evolution.cpp in Sources */,
-				C76BF9071E351BA800757B42 /* Individual.cpp in Sources */,
-				C76BF9031E351BA800757B42 /* evolva.cpp in Sources */,
 				C76BF9041E351BA800757B42 /* FitnessFuncs.cpp in Sources */,
+				C76BF9031E351BA800757B42 /* evolva.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
