@@ -83,11 +83,20 @@ void Individual::setDefaultGeneLength(int length){
 }
 
 int Individual::getGene(int index){
-    return genes[index];
+    if(index<size()){ // avoid out-of-bounds issues
+        return genes[index];
+    } else {
+        return 0;
+    }
 }
 
 void Individual::setGene(int index, int value){
-    genes[index]=value;
+    
+    if(index<size()){ // avoid out-of-bounds issues
+        genes[index]=value;
+    } else {
+        genes.push_back(value);
+    }
 }
 
 int Individual::size(){

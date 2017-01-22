@@ -21,28 +21,31 @@
 #include "Individual.hpp"
 #include "Population.hpp"
 
-class Evolution {
+struct Evolution {
     /* GA parameters */
 private:
-    static const double uniformRate = 0.5;
-    static const double mutationRate = 0.0015;
-    static const int tournamentSize = 10;
-    static const bool elitism = false;
+    static const double crossoverBias;
+    static const double mutationChance;
+    static const int fightersForSurvival;
     
-    /* Public methods */
-public:
-    
-    // Evolve a population
-    static Population evolvePopulation(Population);
-    
+    /* GA internal methods */
     // Crossover individuals
-    static Individual crossover(Individual, Individual);
+    static std::shared_ptr<Individual> crossover(std::shared_ptr<Individual>, std::shared_ptr<Individual>);
     
     // Mutate an individual
-    static void mutate(Individual);
+    static void mutate(std::shared_ptr<Individual>);
     
     // Select individuals for crossover
-    static Individual tournamentSelection(Population);
+    static std::shared_ptr<Individual> naturalSelection(std::shared_ptr<Population>);
+    
+    
+    /* Interface */
+public:
+    // If TRUE: allow for the fittest to lead the species and remain unaltered
+    static bool elitism;
+    
+    // Evolve a population
+    static std::shared_ptr<Population> evolvePopulation(std::shared_ptr<Population>);
 };
 
 
