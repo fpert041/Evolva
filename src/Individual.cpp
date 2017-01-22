@@ -85,6 +85,29 @@ int Individual::size(){
     return genes.size();
 }
 
+std::string Individual::toString(){
+    std::string genotype = "";
+    
+    for(int i=0; i<size(); ++i){
+        genotype += std::to_string(getGene(i));
+    }
+    
+    return genotype;
+}
+
+//--------------------------------------------------------------------------------------------
+
+// GET FITNESS
+
+int Individual::getFitness(){
+    
+    if(fitness != 0){
+        fitness = getFitness(this);
+    }
+    
+    return fitness;
+}
+
 int Individual::getFitness(Individual* alice){
     
     //int ex = Fitness::solution[3]; // debug test
@@ -99,14 +122,6 @@ int Individual::getFitness(Individual* alice){
     return fitness;
 }
 
-int Individual::getFitness(){
-    
-    if(fitness != 0){
-        fitness = getFitness(this);
-    }
-    
-    return fitness;
-}
 
 
 

@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C71D4C251E2EABCD006FBD6B /* helpingThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = C71D4C241E2EABCD006FBD6B /* helpingThreads.h */; };
-		C71D4C281E2F91E7006FBD6B /* Evolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C71D4C261E2F91E7006FBD6B /* Evolution.cpp */; };
-		C71D4C291E2F91E7006FBD6B /* Evolution.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C71D4C271E2F91E7006FBD6B /* Evolution.hpp */; };
-		C71D4C2E1E2F951D006FBD6B /* FitnessFuncs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C71D4C2C1E2F951D006FBD6B /* FitnessFuncs.hpp */; };
-		C71D4C311E2F97F2006FBD6B /* Individual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C71D4C2F1E2F97F2006FBD6B /* Individual.cpp */; };
-		C71D4C321E2F97F2006FBD6B /* Individual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C71D4C301E2F97F2006FBD6B /* Individual.hpp */; };
-		C71D4C351E2F9D4A006FBD6B /* Population.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C71D4C331E2F9D4A006FBD6B /* Population.cpp */; };
-		C71D4C361E2F9D4A006FBD6B /* Population.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C71D4C341E2F9D4A006FBD6B /* Population.hpp */; };
-		C76BF8F51E34ED1200757B42 /* FitnessFuncs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C71D4C2B1E2F951D006FBD6B /* FitnessFuncs.cpp */; };
-		C7B1209C1E24E0C400019D2F /* evolva.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B1209B1E24E0C400019D2F /* evolva.cpp */; };
+		C76BF9011E351BA800757B42 /* Evolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8F71E351BA800757B42 /* Evolution.cpp */; };
+		C76BF9021E351BA800757B42 /* Evolution.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF8F81E351BA800757B42 /* Evolution.hpp */; };
+		C76BF9031E351BA800757B42 /* evolva.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8F91E351BA800757B42 /* evolva.cpp */; };
+		C76BF9041E351BA800757B42 /* FitnessFuncs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8FA1E351BA800757B42 /* FitnessFuncs.cpp */; };
+		C76BF9051E351BA800757B42 /* FitnessFuncs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF8FB1E351BA800757B42 /* FitnessFuncs.hpp */; };
+		C76BF9071E351BA800757B42 /* Individual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8FD1E351BA800757B42 /* Individual.cpp */; };
+		C76BF9081E351BA800757B42 /* Individual.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF8FE1E351BA800757B42 /* Individual.hpp */; };
+		C76BF9091E351BA800757B42 /* Population.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8FF1E351BA800757B42 /* Population.cpp */; };
+		C76BF90A1E351BA800757B42 /* Population.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF9001E351BA800757B42 /* Population.hpp */; };
+		C76BF90D1E351BE900757B42 /* helpingThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = C76BF90C1E351BE900757B42 /* helpingThreads.h */; };
 		C7E1077E1E22B93C00D55B23 /* MaxAudioAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E1077D1E22B93C00D55B23 /* MaxAudioAPI.framework */; };
 /* End PBXBuildFile section */
 
@@ -24,16 +24,17 @@
 		22CF10220EE984600054F513 /* maxmspsdk.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = maxmspsdk.xcconfig; path = ../../maxmspsdk.xcconfig; sourceTree = SOURCE_ROOT; };
 		2FBBEAE508F335360078DB84 /* evolva.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = evolva.mxo; sourceTree = BUILT_PRODUCTS_DIR; };
 		36C5493616F558AA0054C037 /* maxcpp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = maxcpp.h; sourceTree = "<group>"; };
-		C71D4C241E2EABCD006FBD6B /* helpingThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = helpingThreads.h; sourceTree = "<group>"; };
-		C71D4C261E2F91E7006FBD6B /* Evolution.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Evolution.cpp; sourceTree = "<group>"; };
-		C71D4C271E2F91E7006FBD6B /* Evolution.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Evolution.hpp; sourceTree = "<group>"; };
-		C71D4C2B1E2F951D006FBD6B /* FitnessFuncs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FitnessFuncs.cpp; sourceTree = "<group>"; };
-		C71D4C2C1E2F951D006FBD6B /* FitnessFuncs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FitnessFuncs.hpp; sourceTree = "<group>"; };
-		C71D4C2F1E2F97F2006FBD6B /* Individual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Individual.cpp; sourceTree = "<group>"; };
-		C71D4C301E2F97F2006FBD6B /* Individual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Individual.hpp; sourceTree = "<group>"; };
-		C71D4C331E2F9D4A006FBD6B /* Population.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Population.cpp; sourceTree = "<group>"; };
-		C71D4C341E2F9D4A006FBD6B /* Population.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Population.hpp; sourceTree = "<group>"; };
-		C7B1209B1E24E0C400019D2F /* evolva.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = evolva.cpp; sourceTree = "<group>"; };
+		C76BF8F61E351B7B00757B42 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C76BF8F71E351BA800757B42 /* Evolution.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Evolution.cpp; path = src/Evolution.cpp; sourceTree = "<group>"; };
+		C76BF8F81E351BA800757B42 /* Evolution.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Evolution.hpp; path = src/Evolution.hpp; sourceTree = "<group>"; };
+		C76BF8F91E351BA800757B42 /* evolva.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = evolva.cpp; path = src/evolva.cpp; sourceTree = "<group>"; };
+		C76BF8FA1E351BA800757B42 /* FitnessFuncs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FitnessFuncs.cpp; path = src/FitnessFuncs.cpp; sourceTree = "<group>"; };
+		C76BF8FB1E351BA800757B42 /* FitnessFuncs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FitnessFuncs.hpp; path = src/FitnessFuncs.hpp; sourceTree = "<group>"; };
+		C76BF8FD1E351BA800757B42 /* Individual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Individual.cpp; path = src/Individual.cpp; sourceTree = "<group>"; };
+		C76BF8FE1E351BA800757B42 /* Individual.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Individual.hpp; path = src/Individual.hpp; sourceTree = "<group>"; };
+		C76BF8FF1E351BA800757B42 /* Population.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Population.cpp; path = src/Population.cpp; sourceTree = "<group>"; };
+		C76BF9001E351BA800757B42 /* Population.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Population.hpp; path = src/Population.hpp; sourceTree = "<group>"; };
+		C76BF90C1E351BE900757B42 /* helpingThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpingThreads.h; path = includes/helpingThreads.h; sourceTree = "<group>"; };
 		C7E1077D1E22B93C00D55B23 /* MaxAudioAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAudioAPI.framework; path = "../../../source/c74support/msp-includes/MaxAudioAPI.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,17 +54,10 @@
 			isa = PBXGroup;
 			children = (
 				C7E1077D1E22B93C00D55B23 /* MaxAudioAPI.framework */,
-				36C5491F16F557E00054C037 /* maxcpp */,
+				C76BF8F61E351B7B00757B42 /* README.md */,
+				C76BF90B1E351BD300757B42 /* src */,
 				C71D4C2A1E2F94D2006FBD6B /* includes */,
-				C7B1209B1E24E0C400019D2F /* evolva.cpp */,
-				C71D4C261E2F91E7006FBD6B /* Evolution.cpp */,
-				C71D4C271E2F91E7006FBD6B /* Evolution.hpp */,
-				C71D4C331E2F9D4A006FBD6B /* Population.cpp */,
-				C71D4C341E2F9D4A006FBD6B /* Population.hpp */,
-				C71D4C2F1E2F97F2006FBD6B /* Individual.cpp */,
-				C71D4C301E2F97F2006FBD6B /* Individual.hpp */,
-				C71D4C2B1E2F951D006FBD6B /* FitnessFuncs.cpp */,
-				C71D4C2C1E2F951D006FBD6B /* FitnessFuncs.hpp */,
+				36C5491F16F557E00054C037 /* maxcpp */,
 				19C28FB4FE9D528D11CA2CBB /* Products */,
 			);
 			name = iterator;
@@ -89,10 +83,26 @@
 		C71D4C2A1E2F94D2006FBD6B /* includes */ = {
 			isa = PBXGroup;
 			children = (
+				C76BF90C1E351BE900757B42 /* helpingThreads.h */,
 				22CF10220EE984600054F513 /* maxmspsdk.xcconfig */,
-				C71D4C241E2EABCD006FBD6B /* helpingThreads.h */,
 			);
 			name = includes;
+			sourceTree = "<group>";
+		};
+		C76BF90B1E351BD300757B42 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				C76BF8F91E351BA800757B42 /* evolva.cpp */,
+				C76BF8F71E351BA800757B42 /* Evolution.cpp */,
+				C76BF8F81E351BA800757B42 /* Evolution.hpp */,
+				C76BF8FD1E351BA800757B42 /* Individual.cpp */,
+				C76BF8FE1E351BA800757B42 /* Individual.hpp */,
+				C76BF8FF1E351BA800757B42 /* Population.cpp */,
+				C76BF9001E351BA800757B42 /* Population.hpp */,
+				C76BF8FA1E351BA800757B42 /* FitnessFuncs.cpp */,
+				C76BF8FB1E351BA800757B42 /* FitnessFuncs.hpp */,
+			);
+			name = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -102,11 +112,11 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C71D4C361E2F9D4A006FBD6B /* Population.hpp in Headers */,
-				C71D4C2E1E2F951D006FBD6B /* FitnessFuncs.hpp in Headers */,
-				C71D4C321E2F97F2006FBD6B /* Individual.hpp in Headers */,
-				C71D4C291E2F91E7006FBD6B /* Evolution.hpp in Headers */,
-				C71D4C251E2EABCD006FBD6B /* helpingThreads.h in Headers */,
+				C76BF90A1E351BA800757B42 /* Population.hpp in Headers */,
+				C76BF90D1E351BE900757B42 /* helpingThreads.h in Headers */,
+				C76BF9021E351BA800757B42 /* Evolution.hpp in Headers */,
+				C76BF9081E351BA800757B42 /* Individual.hpp in Headers */,
+				C76BF9051E351BA800757B42 /* FitnessFuncs.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,11 +193,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C76BF8F51E34ED1200757B42 /* FitnessFuncs.cpp in Sources */,
-				C71D4C311E2F97F2006FBD6B /* Individual.cpp in Sources */,
-				C71D4C351E2F9D4A006FBD6B /* Population.cpp in Sources */,
-				C71D4C281E2F91E7006FBD6B /* Evolution.cpp in Sources */,
-				C7B1209C1E24E0C400019D2F /* evolva.cpp in Sources */,
+				C76BF9091E351BA800757B42 /* Population.cpp in Sources */,
+				C76BF9011E351BA800757B42 /* Evolution.cpp in Sources */,
+				C76BF9071E351BA800757B42 /* Individual.cpp in Sources */,
+				C76BF9031E351BA800757B42 /* evolva.cpp in Sources */,
+				C76BF9041E351BA800757B42 /* FitnessFuncs.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,6 +234,7 @@
 					"\"$(C74SUPPORT)/msp-includes\"",
 					"\"$(C74SUPPORT)/jit-includes\"",
 					../../maxcpp,
+					"$(PROJECT_DIR)/includes",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
@@ -244,6 +255,7 @@
 					"\"$(C74SUPPORT)/msp-includes\"",
 					"\"$(C74SUPPORT)/jit-includes\"",
 					../../maxcpp,
+					"$(PROJECT_DIR)/includes",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				OTHER_LDFLAGS = "$(C74_SYM_LINKER_FLAGS)";
