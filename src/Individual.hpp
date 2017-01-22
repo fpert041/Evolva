@@ -9,12 +9,15 @@
 #ifndef Individual_hpp
 #define Individual_hpp
 
+#include "maxcpp.h"
+
 #include <stdio.h>
 #include <string>
 #include <vector>
 #include <Math.h>
 
 #include "FitnessFuncs.hpp"
+
 
 class Individual{
 private:

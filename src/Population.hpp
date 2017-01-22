@@ -9,6 +9,8 @@
 #ifndef Population_hpp
 #define Population_hpp
 
+#include "maxcpp.h"
+
 #include <stdio.h>
 #include <vector>
 #include <string>

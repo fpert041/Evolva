@@ -13,10 +13,12 @@
 #include <string>
 #include <vector>
 
+#include "maxcpp.h"
+
 
 /* GLOBAL FITNESS CALCULATION METHODS & SOLUTION DATA */
 
-namespace Fitness {
+namespace Goals {
     
     extern int solutionSize;
     extern std::vector<int>solution;

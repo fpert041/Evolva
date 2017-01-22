@@ -132,9 +132,11 @@ int Individual::getFitness(Individual* alice){
     
     int fitness = 0;
     
-     //Loop through our individuals genes and compare them to our candidates
-            for(int i=0; i<alice->size() && i<Fitness::solution.size(); ++i){
-                //do...
+     //Loop through our individuals genes and compare them to the ideal candidate's
+            for(int i=0; i<alice->size() && i<Goals::solution.size(); ++i){
+                if(alice->getGene(i) == Goals::solution[i]){
+                    fitness++;
+                }
             }
     
     return fitness;

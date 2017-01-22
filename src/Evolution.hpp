@@ -9,11 +9,11 @@
 #ifndef Evolution_hpp
 #define Evolution_hpp
 
-#include <stdio.h>
+#include "maxcpp.h"
 
+#include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
-
 #include <vector>
 #include <sstream>
 #include <math.h>
