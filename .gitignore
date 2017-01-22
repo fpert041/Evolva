@@ -1,0 +1,13 @@
+*.sdf
+*.suo
+*.sln
+*.opensdf
+DerivedData
+log.txt
+Build
+support
+build
+*.o
+*.dylib
+*.xcworkspace
+xcuserdata
