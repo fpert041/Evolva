@@ -79,5 +79,23 @@ void Population::saveIndividual(int index, std::shared_ptr<Individual> alice)
     individuals[index].swap(alice);
 }
 
+// Get a smart pointer to the individual at a given index
+std::shared_ptr<Individual> Population::getIndividual(int index){
+    return individuals[index];
+}
+
+// Get a smart pointer to the fittest individual
+std::shared_ptr<Individual> Population::getFittest(){
+    std::shared_ptr<Individual> fittest = individuals[0]; // the first being is initially the fittest...
+    
+    for(int i=0; i<individuals.size(); ++i){
+        if(fittest->getFitness() <= individuals[i]->getFitness()){
+            fittest.swap(individuals[i]); // ...but, as we loop through our vector of beings, we compare their fitness and successively select a new fittest if we find one
+        }
+    }
+    return fittest;
+}
+
+
 
 

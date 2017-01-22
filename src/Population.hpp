@@ -35,9 +35,9 @@ public:
     ~Population(); // DESTRUCTOR
     
     /* Getters */
-    Individual getIndividual(int index); // return individuals[index];
+    std::shared_ptr<Individual> getIndividual(int); // return individuals[index];
     
-    Individual getFittest(); // return fittest
+    std::shared_ptr<Individual> getFittest(); // return fittest
     
     /* Public methods */
     // Get population size
