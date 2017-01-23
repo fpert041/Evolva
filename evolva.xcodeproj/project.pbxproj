@@ -17,8 +17,8 @@
 		C76BF9091E351BA800757B42 /* Population.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8FF1E351BA800757B42 /* Population.cpp */; };
 		C76BF90A1E351BA800757B42 /* Population.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF9001E351BA800757B42 /* Population.hpp */; };
 		C76BF90D1E351BE900757B42 /* helpingThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = C76BF90C1E351BE900757B42 /* helpingThreads.h */; };
-		C76BF9101E3577E700757B42 /* Evolva.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF90E1E3577E700757B42 /* Evolva.cpp */; };
-		C76BF9111E3577E700757B42 /* Evolva.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF90F1E3577E700757B42 /* Evolva.hpp */; };
+		C7B49E121E35FAFB0067910B /* Evolva.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C7B49E101E35FAFB0067910B /* Evolva.cpp */; };
+		C7B49E131E35FAFB0067910B /* Evolva.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C7B49E111E35FAFB0067910B /* Evolva.hpp */; };
 		C7E1077E1E22B93C00D55B23 /* MaxAudioAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E1077D1E22B93C00D55B23 /* MaxAudioAPI.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,8 +37,8 @@
 		C76BF8FF1E351BA800757B42 /* Population.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Population.cpp; path = src/Population.cpp; sourceTree = "<group>"; };
 		C76BF9001E351BA800757B42 /* Population.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Population.hpp; path = src/Population.hpp; sourceTree = "<group>"; };
 		C76BF90C1E351BE900757B42 /* helpingThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpingThreads.h; path = includes/helpingThreads.h; sourceTree = "<group>"; };
-		C76BF90E1E3577E700757B42 /* Evolva.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Evolva.cpp; sourceTree = "<group>"; };
-		C76BF90F1E3577E700757B42 /* Evolva.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Evolva.hpp; sourceTree = "<group>"; };
+		C7B49E101E35FAFB0067910B /* Evolva.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Evolva.cpp; path = src/Evolva.cpp; sourceTree = "<group>"; };
+		C7B49E111E35FAFB0067910B /* Evolva.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Evolva.hpp; path = src/Evolva.hpp; sourceTree = "<group>"; };
 		C7E1077D1E22B93C00D55B23 /* MaxAudioAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAudioAPI.framework; path = "../../../source/c74support/msp-includes/MaxAudioAPI.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,8 +97,8 @@
 			isa = PBXGroup;
 			children = (
 				C76BF8F91E351BA800757B42 /* main.cpp */,
-				C76BF90E1E3577E700757B42 /* Evolva.cpp */,
-				C76BF90F1E3577E700757B42 /* Evolva.hpp */,
+				C7B49E101E35FAFB0067910B /* Evolva.cpp */,
+				C7B49E111E35FAFB0067910B /* Evolva.hpp */,
 				C76BF8F71E351BA800757B42 /* Evolution.cpp */,
 				C76BF8F81E351BA800757B42 /* Evolution.hpp */,
 				C76BF8FF1E351BA800757B42 /* Population.cpp */,
@@ -121,9 +121,9 @@
 				C76BF90A1E351BA800757B42 /* Population.hpp in Headers */,
 				C76BF90D1E351BE900757B42 /* helpingThreads.h in Headers */,
 				C76BF9021E351BA800757B42 /* Evolution.hpp in Headers */,
+				C7B49E131E35FAFB0067910B /* Evolva.hpp in Headers */,
 				C76BF9081E351BA800757B42 /* Individual.hpp in Headers */,
 				C76BF9051E351BA800757B42 /* FitnessFuncs.hpp in Headers */,
-				C76BF9111E3577E700757B42 /* Evolva.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +202,7 @@
 			files = (
 				C76BF9071E351BA800757B42 /* Individual.cpp in Sources */,
 				C76BF9091E351BA800757B42 /* Population.cpp in Sources */,
-				C76BF9101E3577E700757B42 /* Evolva.cpp in Sources */,
+				C7B49E121E35FAFB0067910B /* Evolva.cpp in Sources */,
 				C76BF9011E351BA800757B42 /* Evolution.cpp in Sources */,
 				C76BF9041E351BA800757B42 /* FitnessFuncs.cpp in Sources */,
 				C76BF9031E351BA800757B42 /* main.cpp in Sources */,

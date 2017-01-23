@@ -24,6 +24,7 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) {
     //Initialize goal solution and population
     Goals::setSolution(solutionString);
     myPopulation.reset(new Population(100, originalPop));
+    notesToPlay = std::vector<int>();
     
     post("object created");
 }
@@ -41,35 +42,37 @@ t_systhread_mutex	t_mutex; // mutual exclusion lock for threadsafety
 // threadable function
 void Evolva::thread_function(int notesPerUpdate, int bangInterval, std::vector<int>& notesToPlay)
 {
-//    clock_t start = clock();
-//    long startTime = floor(((float)start)/CLOCKS_PER_SEC*1000);
+    //    clock_t start = clock();
+    //    long startTime = floor(((float)start)/CLOCKS_PER_SEC*1000);
     
     int notesPlayed = 0;
-        //<<<<<<<<<<<<<<<<
-    ////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
-    while(notesPlayed < notesPerUpdate){
-        /////outlet_int(m_outlets[0], notesToPlay[notesPlayed] + 24); //<<<<<<<<<<<<<<<<
-//        long ac = 200;
-//        t_atom * av;
-//        outlet_anything(m_outlets[0], gensym("test"), ac, av);
-        notesPlayed++;
-        if(notesPlayed < notesPerUpdate)
-        {
-            try
+    //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+    /////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
+    if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of notes
+        while(notesPlayed < notesPerUpdate){
+            outlet_int(m_outlets[0], notesToPlay[notesPlayed] + 24); // output notes as midi {TESTED :)}
+            //        long ac = 200;
+            //        t_atom * av;
+            //        outlet_anything(m_outlets[0], gensym("test"), ac, av);
+            notesPlayed++;
+            if(notesPlayed < notesPerUpdate)
             {
-                systhread_sleep((long) (bangInterval / notesPerUpdate));
-            }
-            
-            catch (ExceptionInformation ei)
-            {
-                // TODO: appropriate catch block
-                unsigned long ul = ei.theKind;
-                post( " error code: %l ", ul );
+                try
+                {
+                    systhread_sleep((long) (bangInterval / notesPerUpdate));
+                }
+                
+                catch (ExceptionInformation ei)
+                {
+                    // TODO: appropriate catch block
+                    unsigned long ul = ei.theKind;
+                    post( " error code: %l ", ul );
+                }
             }
         }
     }
-    ////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<<
-    ////systhread_exit(0);  //<<<<<<<<<<<<<<<<
+    ////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+    systhread_exit(0);
 }
 
 
@@ -96,13 +99,13 @@ void Evolva::bang(long inlet) {
     //double d = rand()/RAND_MAX; /* random double-float between 0 and 1 */
     
     // Evolution the population by one step until we reach an optimum solution
-    if(false)//myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())  //<<<<<<<<<<<<<<<<
+    if(/*myPopulation->getFittest()->getFitness()*/ 0 < Goals::getMaxFitness())  //<<<<<<<<<<<< { *BUG IN "getFitness" }
     {
-        myPopulation = Evolution::evolvePopulation(myPopulation);  //<<<<<<<<<<<<<<<<
+        myPopulation = Evolution::evolvePopulation(myPopulation);
         generationCount++;
-        std::string str = "Generation: " + std::to_string(generationCount)
-                        +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness());
-        post(str.c_str());
+        /*std::string str = "Generation: " + std::to_string(generationCount)  // { *BUG IN "getFitness" }
+                        +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness()); //<<<<<<<<<<<<<<<<
+        post(str.c_str());*/
     }
     else
     {
@@ -113,12 +116,11 @@ void Evolva::bang(long inlet) {
     }
     
     // Set list of notes to play
-    /////notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<<
-    
+    //notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<< { *BUG IN THE FIRST PARAMETER! }
 
-    // Play notes in a NEW THREAD: //<<<<<<<<<<<<<<<<
+    // Play notes in a NEW THREAD:
     mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
-        //systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
+            // -> systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
     
     
     post("bang in inlet %i!", inlet);

@@ -41,6 +41,7 @@ public:
     
     // A pointer-variable for our population
     std::shared_ptr<Population> myPopulation;
+    std::vector<int> notesToPlay;
     
     // Need just one note per 'bang' fow now
     int notesPerUpdate = 1;
@@ -66,8 +67,6 @@ public:
     void inInt(long inlet, long v);
     
 private:
-    
-    std::vector<int> notesToPlay;
     
     // Select and return a list of notes
     std::vector<int> chooseNotes(std::string, int); // CORE: "MUSICAL" DECISION MAKING METHOD
