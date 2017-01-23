@@ -23,7 +23,7 @@ The external compiles, interfaces with Max and can launch a separate thread. The
 
 - In "Evolva::threaded_function(...)":
 
-[code]
+```
 int notesPlayed = 0;
 //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
 /////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
@@ -35,10 +35,11 @@ if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of n
 }
 ////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
 systhread_exit(0);
-[/code]
+```
 
 - In "Evolva::bang(...)":
 
+```
 // Evolution the population by one step until we reach an optimum solution
 if(/*myPopulation->getFittest()->getFitness()*/ 0 < Goals::getMaxFitness())  //<<<<<<<<<<<< { *BUG IN "getFitness" }
 {
@@ -48,12 +49,12 @@ if(/*myPopulation->getFittest()->getFitness()*/ 0 < Goals::getMaxFitness())  //<
     +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness()); //<<<<<<<<<<<<<<<<
     post(str.c_str());*/
 }
-
+```
 ...and...
-
+```
 // Set list of notes to play
 //notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<< { *BUG IN THE FIRST PARAMETER! }
-
+```
 
 ### TODO:
 

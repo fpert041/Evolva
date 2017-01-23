@@ -30,7 +30,6 @@ Population::Population(int popSize, bool init){
         if(usePredefined){
             std::shared_ptr<Individual> alpha(new Individual("101010101010"));
             std::shared_ptr<Individual> beta(new Individual("010010101101"));
-            
             if(popSize%2 != 0) individuals.push_back(beta);
             
             for(int i=0; i<floor(popSize/2); ++i){
