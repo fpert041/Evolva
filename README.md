@@ -23,6 +23,7 @@ The external compiles, interfaces with Max and can launch a separate thread. The
 
 - In "Evolva::threaded_function(...)":
 
+[code]
 int notesPlayed = 0;
 //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
 /////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
@@ -34,6 +35,7 @@ if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of n
 }
 ////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
 systhread_exit(0);
+[/code]
 
 - In "Evolva::bang(...)":
 
