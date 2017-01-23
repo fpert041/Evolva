@@ -34,9 +34,9 @@ public:
     ~Evolva();
     
     // 'Target' set of notes to play, a bit string representing the state of 48 notes
-    std::string solutionString = "000000000000100000000000101010110101100000000000";
+    std::string solutionString;
     // The set of notes to start out with
-    std::string originalPop ="000000000000100000000000000000000000101010010011";
+    std::string originalPop;
     int generationCount;
     
     // A pointer-variable for our population
@@ -46,7 +46,7 @@ public:
     // Need just one note per 'bang' fow now
     int notesPerUpdate = 1;
     // Initialize variable to contain new solution during transitions
-    std::string newSol="000000000000000000000000000000000000101010010011";
+    std::string newSol;
     // Set how many milliseconds between notes
     volatile float bangInterval = 500;
     

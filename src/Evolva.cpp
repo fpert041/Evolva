@@ -21,6 +21,11 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) {
     srand(seed); /* seed random number generator */
 #endif
     
+    solutionString = "000000000000100000000000101010110101100000000000";
+    originalPop ="000000000000100000000000000000000000101010010011";
+    
+    newSol="000000000000000000000000000000000000101010010011";
+    
     //Initialize goal solution and population
     Goals::setSolution(solutionString);
     myPopulation.reset(new Population(100, originalPop));
@@ -116,7 +121,7 @@ void Evolva::bang(long inlet) {
     }
     
     // Set list of notes to play
-    //notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<< { *BUG IN THE FIRST PARAMETER! }
+    notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<< { *BUG IN THE FIRST PARAMETER! --FOLLOWING THE TRAIL NOW: WIP ---Look for ARIANA's THREAD }
 
     // Play notes in a NEW THREAD:
     mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address

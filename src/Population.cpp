@@ -48,6 +48,8 @@ Population::Population(int popSize, bool init){
 }
 
 Population::Population(int popSize, std::string original){
+    // post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using 
+    
     usePredefined = false;
     //individuals = std::vector<Individual>(popSize);
     for (int i = 0; i < size(); i++)
@@ -85,13 +87,17 @@ std::shared_ptr<Individual> Population::getIndividual(int index){
 
 // Get a smart pointer to the fittest individual
 std::shared_ptr<Individual> Population::getFittest(){
-    std::shared_ptr<Individual> fittest = individuals[0]; // the first being is initially the fittest...
+    // {ARIANA's THREAD 1} {Note: it seems that individuals[] is not pointing to an Individual
+    post(std::to_string(size()).c_str()); // {THIS is returning 0}
     
-    for(int i=0; i<individuals.size(); ++i){
-        if(fittest->getFitness() <= individuals[i]->getFitness()){
-            fittest.swap(individuals[i]); // ...but, as we loop through our vector of beings, we compare their fitness and successively select a new fittest if we find one
-        }
-    }
+    std::shared_ptr<Individual> fittest(new Individual()); //this works!
+    //std::shared_ptr<Individual> fittest = individuals[0]; // the first being is initially the fittest...
+    
+//    for(int i=0; i<individuals.size(); ++i){
+//        if(fittest->getFitness() <= individuals[i]->getFitness()){
+//            fittest.swap(individuals[i]); // ...but, as we loop through our vector of beings, we compare their fitness and successively select a new fittest if we find one
+//        }
+//    }
     return fittest;
 }
 
