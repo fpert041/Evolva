@@ -26,7 +26,7 @@ namespace Goals{
         std::vector<int>solution(newSolution.size());
         
         for (int i = 0; i < newSolution.length(); ++i){
-            solution[i] = strcmp(&newSolution[i],"0") ? 0 : 1;
+            solution[i] = strncmp(&newSolution[i],"0", 1) ? 0 : 1;
         }
         post("new solution set");
     }

@@ -15,7 +15,6 @@ const double Evolution::mutationChance = 0.0015;
 const int Evolution::fightersForSurvival = 10;
 bool Evolution::elitism = false;
 
-
 //--------------------------------------------------------------------------------------------
 
 /* Interface */
@@ -54,6 +53,12 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
 
 // Crossover individuals
 std::shared_ptr<Individual> Evolution::crossover(std::shared_ptr<Individual> alpha, std::shared_ptr<Individual> beta){
+#ifndef RANDOM_SEED
+#define RANDOM_SEED
+    const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
+    srand(seed); /* seed random number generator */
+#endif
+    
     std::shared_ptr<Individual> newbie( new Individual());
     
     // Loop through genes...
@@ -67,6 +72,12 @@ std::shared_ptr<Individual> Evolution::crossover(std::shared_ptr<Individual> alp
 
 // Mutate individuals' genotypes
 void Evolution::mutate(std::shared_ptr<Individual> gazorpazorp){
+#ifndef RANDOM_SEED
+#define RANDOM_SEED
+    const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
+    srand(seed); /* seed random number generator */
+#endif
+    
     // Loop through genes...
     for(int i=0; i<gazorpazorp->size(); ++i){
         // ...and (possibly) mutate some genes at random

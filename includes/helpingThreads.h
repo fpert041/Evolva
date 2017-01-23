@@ -27,9 +27,20 @@ public:
     }
     
     static long mcppthread_create( T* objectWithRun, t_systhread* t){
-        return systhread_create( (method) threaded_func, objectWithRun, 0, 0, 0, t );
+        ////quit(t); // kill thread if, any //<<<<<<<<<<<<<
+        
+        return systhread_create( (method) threaded_func, objectWithRun, 0, 0, 0, t ); // create new thread + begin execution
     }
+private:
     
+    static void quit(t_systhread* t){
+        unsigned int returnVal;
+        
+        if (t){
+          systhread_join(t, &returnVal);
+          t=NULL;
+        }
+    }
     
     
     //----------------------------------------------------------------------

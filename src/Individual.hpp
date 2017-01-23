@@ -22,7 +22,7 @@
 class Individual{
 private:
     
-    int defaultGeneLength = 84;
+    int defaultGeneLength = 96;
     std::vector<int> genes; // Vector to store genes
     
     // Score

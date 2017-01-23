@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		C76BF9011E351BA800757B42 /* Evolution.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8F71E351BA800757B42 /* Evolution.cpp */; };
 		C76BF9021E351BA800757B42 /* Evolution.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF8F81E351BA800757B42 /* Evolution.hpp */; };
-		C76BF9031E351BA800757B42 /* evolva.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8F91E351BA800757B42 /* evolva.cpp */; };
+		C76BF9031E351BA800757B42 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8F91E351BA800757B42 /* main.cpp */; };
 		C76BF9041E351BA800757B42 /* FitnessFuncs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8FA1E351BA800757B42 /* FitnessFuncs.cpp */; };
 		C76BF9051E351BA800757B42 /* FitnessFuncs.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF8FB1E351BA800757B42 /* FitnessFuncs.hpp */; };
 		C76BF9071E351BA800757B42 /* Individual.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8FD1E351BA800757B42 /* Individual.cpp */; };
@@ -17,6 +17,8 @@
 		C76BF9091E351BA800757B42 /* Population.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF8FF1E351BA800757B42 /* Population.cpp */; };
 		C76BF90A1E351BA800757B42 /* Population.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF9001E351BA800757B42 /* Population.hpp */; };
 		C76BF90D1E351BE900757B42 /* helpingThreads.h in Headers */ = {isa = PBXBuildFile; fileRef = C76BF90C1E351BE900757B42 /* helpingThreads.h */; };
+		C76BF9101E3577E700757B42 /* Evolva.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C76BF90E1E3577E700757B42 /* Evolva.cpp */; };
+		C76BF9111E3577E700757B42 /* Evolva.hpp in Headers */ = {isa = PBXBuildFile; fileRef = C76BF90F1E3577E700757B42 /* Evolva.hpp */; };
 		C7E1077E1E22B93C00D55B23 /* MaxAudioAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E1077D1E22B93C00D55B23 /* MaxAudioAPI.framework */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +29,7 @@
 		C76BF8F61E351B7B00757B42 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C76BF8F71E351BA800757B42 /* Evolution.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Evolution.cpp; path = src/Evolution.cpp; sourceTree = "<group>"; };
 		C76BF8F81E351BA800757B42 /* Evolution.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Evolution.hpp; path = src/Evolution.hpp; sourceTree = "<group>"; };
-		C76BF8F91E351BA800757B42 /* evolva.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = evolva.cpp; path = src/evolva.cpp; sourceTree = "<group>"; };
+		C76BF8F91E351BA800757B42 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = "<group>"; };
 		C76BF8FA1E351BA800757B42 /* FitnessFuncs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FitnessFuncs.cpp; path = src/FitnessFuncs.cpp; sourceTree = "<group>"; };
 		C76BF8FB1E351BA800757B42 /* FitnessFuncs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = FitnessFuncs.hpp; path = src/FitnessFuncs.hpp; sourceTree = "<group>"; };
 		C76BF8FD1E351BA800757B42 /* Individual.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Individual.cpp; path = src/Individual.cpp; sourceTree = "<group>"; };
@@ -35,6 +37,8 @@
 		C76BF8FF1E351BA800757B42 /* Population.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Population.cpp; path = src/Population.cpp; sourceTree = "<group>"; };
 		C76BF9001E351BA800757B42 /* Population.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Population.hpp; path = src/Population.hpp; sourceTree = "<group>"; };
 		C76BF90C1E351BE900757B42 /* helpingThreads.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helpingThreads.h; path = includes/helpingThreads.h; sourceTree = "<group>"; };
+		C76BF90E1E3577E700757B42 /* Evolva.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Evolva.cpp; sourceTree = "<group>"; };
+		C76BF90F1E3577E700757B42 /* Evolva.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Evolva.hpp; sourceTree = "<group>"; };
 		C7E1077D1E22B93C00D55B23 /* MaxAudioAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MaxAudioAPI.framework; path = "../../../source/c74support/msp-includes/MaxAudioAPI.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,7 +96,9 @@
 		C76BF90B1E351BD300757B42 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				C76BF8F91E351BA800757B42 /* evolva.cpp */,
+				C76BF8F91E351BA800757B42 /* main.cpp */,
+				C76BF90E1E3577E700757B42 /* Evolva.cpp */,
+				C76BF90F1E3577E700757B42 /* Evolva.hpp */,
 				C76BF8F71E351BA800757B42 /* Evolution.cpp */,
 				C76BF8F81E351BA800757B42 /* Evolution.hpp */,
 				C76BF8FF1E351BA800757B42 /* Population.cpp */,
@@ -117,6 +123,7 @@
 				C76BF9021E351BA800757B42 /* Evolution.hpp in Headers */,
 				C76BF9081E351BA800757B42 /* Individual.hpp in Headers */,
 				C76BF9051E351BA800757B42 /* FitnessFuncs.hpp in Headers */,
+				C76BF9111E3577E700757B42 /* Evolva.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,9 +202,10 @@
 			files = (
 				C76BF9071E351BA800757B42 /* Individual.cpp in Sources */,
 				C76BF9091E351BA800757B42 /* Population.cpp in Sources */,
+				C76BF9101E3577E700757B42 /* Evolva.cpp in Sources */,
 				C76BF9011E351BA800757B42 /* Evolution.cpp in Sources */,
 				C76BF9041E351BA800757B42 /* FitnessFuncs.cpp in Sources */,
-				C76BF9031E351BA800757B42 /* evolva.cpp in Sources */,
+				C76BF9031E351BA800757B42 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -16,7 +16,8 @@ Individual::Individual(){
     
 #ifndef RANDOM_SEED
 #define RANDOM_SEED
-    static const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
+    const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
+    srand(seed); /* seed random number generator */
 #endif
     
     genes = std::vector<int>(defaultGeneLength); // default genotype length
@@ -30,14 +31,15 @@ Individual::Individual(std::string genotype){
     
 #ifndef RANDOM_SEED
 #define RANDOM_SEED
-    static const int seed = time(NULL);
+    const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
+    srand(seed); /* seed random number generator */
 #endif
     
     genes = std::vector<int>(genotype.length()); // Genes-vector length initialised according to the input genotype
     
     // Loop through each character of the input string and save it in our vector as an int
     for(int i=0; i<genotype.length(); ++i){
-        if(strcmp(&genotype[i], "1")){
+        if(strncmp(&genotype[i], "1", 1)){
            genes[i]=1;
         } else {
            genes[i]=0;
@@ -68,7 +70,7 @@ void Individual::newBeing(std::string genotype){
     genes = std::vector<int>(genotype.length()); // Genes-vector length re-initialised according to the input genotype
     
     for(int i=0; i<genes.size(); ++i){
-        if(strcmp(&genotype[i],"1")){
+        if(strncmp(&genotype[i],"1", 1)){
             genes[i] = floor(rand()/RAND_MAX +0.85); // -> Allow random mutation but keep it unlikely
         }
     }
