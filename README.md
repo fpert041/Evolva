@@ -11,7 +11,7 @@ Structure in place:
  - The 'Evolva' class calls up the main algorithmic structure (Evolution) and the population-defining classes (Population <- Individual). 
  - "FitnessFuncs" hpp+cpp contain the global methods/variables that set the target solution ("Goal" namespace)
 
-Externa compiles, interfaces with Max and can launch a separate thread. There are at least two types of bugs that prevent me from making the external fully operational (see below). 
+The external compiles, interfaces with Max and can launch a separate thread. There are at least two types of bugs that prevent me from making the external fully operational (see below). 
 
 ### ISSUES: 
 
@@ -23,34 +23,34 @@ Externa compiles, interfaces with Max and can launch a separate thread. There ar
 
 - In "Evolva::threaded_function(...)":
 
-    int notesPlayed = 0;
-    //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
-    /////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
-    if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of notes
-        while(notesPlayed < notesPerUpdate){
-            outlet_int(m_outlets[0], notesToPlay[notesPlayed] + 24);
-            (...)
-        }
+int notesPlayed = 0;
+//<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+/////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
+if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of notes
+    while(notesPlayed < notesPerUpdate){
+        outlet_int(m_outlets[0], notesToPlay[notesPlayed] + 24);
+        (...)
     }
-    ////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
-    systhread_exit(0);
+}
+////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+systhread_exit(0);
 
--In "Evolva::bang(...)":
+- In "Evolva::bang(...)":
 
-    // Evolution the population by one step until we reach an optimum solution
-    if(/*myPopulation->getFittest()->getFitness()*/ 0 < Goals::getMaxFitness())  //<<<<<<<<<<<< { *BUG IN "getFitness" }
-    {
-        myPopulation = Evolution::evolvePopulation(myPopulation);
-        generationCount++;
-        /*std::string str = "Generation: " + std::to_string(generationCount)  // { *BUG IN "getFitness" }
-        +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness()); //<<<<<<<<<<<<<<<<
-        post(str.c_str());*/
-    }
+// Evolution the population by one step until we reach an optimum solution
+if(/*myPopulation->getFittest()->getFitness()*/ 0 < Goals::getMaxFitness())  //<<<<<<<<<<<< { *BUG IN "getFitness" }
+{
+    myPopulation = Evolution::evolvePopulation(myPopulation);
+    generationCount++;
+    /*std::string str = "Generation: " + std::to_string(generationCount)  // { *BUG IN "getFitness" }
+    +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness()); //<<<<<<<<<<<<<<<<
+    post(str.c_str());*/
+}
 
-    ...and...
+...and...
 
-    // Set list of notes to play
-    //notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<< { *BUG IN THE FIRST PARAMETER! }
+// Set list of notes to play
+//notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<< { *BUG IN THE FIRST PARAMETER! }
 
 
 ### TODO:
