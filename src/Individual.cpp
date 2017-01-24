@@ -19,6 +19,7 @@ Individual::Individual(){
     const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
     srand(seed); /* seed random number generator */
 #endif
+    fitness = 0;
     
     genes = std::vector<int>(defaultGeneLength); // default genotype length
     
@@ -34,6 +35,7 @@ Individual::Individual(std::string genotype){
     const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
     srand(seed); /* seed random number generator */
 #endif
+    fitness = 0;
     
     genes = std::vector<int>(genotype.length()); // Genes-vector length initialised according to the input genotype
     
@@ -121,7 +123,7 @@ std::string Individual::toString(){
 
 int Individual::getFitness(){
     
-    if(fitness != 0){
+    if(fitness == 0){
         fitness = getFitness(this);
     }
     

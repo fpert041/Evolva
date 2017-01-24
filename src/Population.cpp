@@ -47,15 +47,15 @@ Population::Population(int popSize, bool init){
     }
 }
 
-Population::Population(int popSize, std::string original){
-    // post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using 
-    
+Population::Population(int popSize, std::string original) : individuals(popSize){
+    //post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
+    //post(std::to_string(size()).c_str());
     usePredefined = false;
-    //individuals = std::vector<Individual>(popSize);
+        //individuals = std::vector<std::shared_ptr<Individual> >(popSize); // LOOK AT THE : ABOVE FOR BEST INITIALISAZION
     for (int i = 0; i < size(); i++)
     {
         std::shared_ptr<Individual> newbie(new Individual(original)); // initialise individual on the heap (using a smart pointer)
-        individuals.push_back(newbie);
+        individuals[i] = newbie;
     }
 }
 
@@ -87,18 +87,21 @@ std::shared_ptr<Individual> Population::getIndividual(int index){
 
 // Get a smart pointer to the fittest individual
 std::shared_ptr<Individual> Population::getFittest(){
-    // {ARIANA's THREAD 1} {Note: it seems that individuals[] is not pointing to an Individual
-    post(std::to_string(size()).c_str()); // {THIS is returning 0}
     
-    std::shared_ptr<Individual> fittest(new Individual()); //this works!
-    //std::shared_ptr<Individual> fittest = individuals[0]; // the first being is initially the fittest...
+    // - - - - DEBUGGED HERE - - - -
+    //post(std::to_string(size()).c_str()); // {THIS is returning 100 correctly}
+    //post(individuals[0]->toString().c_str()); // {THIS is returning a binary string of 48 genes }
     
-//    for(int i=0; i<individuals.size(); ++i){
-//        if(fittest->getFitness() <= individuals[i]->getFitness()){
-//            fittest.swap(individuals[i]); // ...but, as we loop through our vector of beings, we compare their fitness and successively select a new fittest if we find one
-//        }
-//    }
+    std::shared_ptr<Individual> fittest = individuals[0]; // the first being is initially the fittest...
+    
+    for(int i=0; i<individuals.size(); ++i){
+        if(fittest->getFitness() <= individuals[i]->getFitness()){
+            fittest.swap(individuals[i]); // ...but, as we loop through our vector of beings, we compare their fitness and successively select a new fittest if we find one
+        }
+    }
+    
     return fittest;
+    //post(fittest->toString().c_str()); // { THIS is returning a binary string of 48 genes }
 }
 
 

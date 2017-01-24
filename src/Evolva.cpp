@@ -103,14 +103,19 @@ void Evolva::bang(long inlet) {
     //int i = 1 + (rand() % 6); /* random int between 1 and 6 */
     //double d = rand()/RAND_MAX; /* random double-float between 0 and 1 */
     
-    // Evolution the population by one step until we reach an optimum solution
-    if(/*myPopulation->getFittest()->getFitness()*/ 0 < Goals::getMaxFitness())  //<<<<<<<<<<<< { *BUG IN "getFitness" }
+    // Evolution the population by one step until we reach an optimum solution //<<<<<<<<<<<<
+    //post(Goals::getSolution().c_str()); //DEBUGGING //
+    //post(myPopulation->getFittest()->toString().c_str()); //DEBUGGING //
+    post(std::to_string( Goals::getMaxFitness() ).c_str()); //DEBUGGING //
+    
+    if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
     {
-        myPopulation = Evolution::evolvePopulation(myPopulation);
+        // X X X X DEBUGGING HERE X X X X X
+        ////myPopulation = Evolution::evolvePopulation(myPopulation); //<<<<<<<<<<<< { *BUG HERE }
         generationCount++;
-        /*std::string str = "Generation: " + std::to_string(generationCount)  // { *BUG IN "getFitness" }
-                        +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness()); //<<<<<<<<<<<<<<<<
-        post(str.c_str());*/
+        std::string str = "Generation: " + std::to_string(generationCount) 
+                        +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness());
+        post(str.c_str());
     }
     else
     {
@@ -121,9 +126,9 @@ void Evolva::bang(long inlet) {
     }
     
     // Set list of notes to play
-    notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate); //<<<<<<<<<<<<<<<< { *BUG IN THE FIRST PARAMETER! --FOLLOWING THE TRAIL NOW: WIP ---Look for ARIANA's THREAD }
-
-    // Play notes in a NEW THREAD:
+    notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate);
+    
+    // Play notes in a NEW THREAD: // X X X X DEBUGGING HERE X X X X X
     mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
             // -> systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
     

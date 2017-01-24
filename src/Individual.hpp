@@ -26,7 +26,7 @@ private:
     std::vector<int> genes; // Vector to store genes
     
     // Score
-    int fitness = 0;
+    int fitness;
     
     int getFitness(Individual*);
     

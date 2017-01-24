@@ -8,6 +8,8 @@
 
 #include "FitnessFuncs.hpp"
 
+#include <iostream>
+
 namespace Goals{
     
     //class Individual; // forward declaration
@@ -22,18 +24,27 @@ namespace Goals{
     }
     
     // Set a candidate solution using a std::string of 1s and 0s
-    void setSolution(std::string newSolution){
-        std::vector<int>solution(newSolution.size());
+    void setSolution(std::string newSolution) {
         
-        for (int i = 0; i < newSolution.length(); ++i){
+        solution = std::vector<int>(newSolution.length());
+        
+        for (int i = 0; i < solution.size(); ++i){
             solution[i] = strncmp(&newSolution[i],"0", 1) ? 0 : 1;
         }
-        post("new solution set");
+        post("new solution set with a string");
     }
     
     // Get optimum fitness
     int getMaxFitness(){
         int maxFitness = solution.size();
         return maxFitness;
+    }
+    
+    std::string getSolution(){
+        std::string out = "";
+        for(int i = 0; i<solution.size(); i++){
+            out += std::to_string(solution[i]);
+        }
+        return out;
     }
 };

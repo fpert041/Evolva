@@ -103,8 +103,8 @@
 				C76BF8F81E351BA800757B42 /* Evolution.hpp */,
 				C76BF8FF1E351BA800757B42 /* Population.cpp */,
 				C76BF9001E351BA800757B42 /* Population.hpp */,
-				C76BF8FD1E351BA800757B42 /* Individual.cpp */,
 				C76BF8FE1E351BA800757B42 /* Individual.hpp */,
+				C76BF8FD1E351BA800757B42 /* Individual.cpp */,
 				C76BF8FA1E351BA800757B42 /* FitnessFuncs.cpp */,
 				C76BF8FB1E351BA800757B42 /* FitnessFuncs.hpp */,
 			);

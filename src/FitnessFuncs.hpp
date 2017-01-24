@@ -36,6 +36,9 @@ namespace Goals {
     // Get optimum fitness
     extern int getMaxFitness();
     
+    // Get solution as a string
+    extern std::string getSolution();
+    
 };
 
 #endif /* FitnessFuncs_hpp */
