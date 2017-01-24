@@ -26,8 +26,8 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
      // X X X X DEBUGGING HERE X X X X X // <<<<<<<<< { BUG WHEN newPopulation IS RETURNED }
     std::shared_ptr<Population> newPopulation(new Population(pop->size(), false));
     
-    post(std::to_string(newPopulation->size()).c_str()); //DEBUGGING //
-    //post(newPopulation->getFittest()->toString().c_str()); // DEBUGGING
+    post(std::to_string(newPopulation->size()).c_str()); //DEBUGGING // OK
+    //post(newPopulation->getFittest()->toString().c_str()); // DEBUGGING // <<<<<<<<< { BUG HERE <- }
     //post(std::to_string( newPopulation->getFittest()->getFitness()).c_str()); // DEBUGGING //
     
     newPopulation = pop; // DEBUGGING LINE! THIS PREVENTS THE CRASH
@@ -53,7 +53,7 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
     }
     
     
-    // pop.reset(); // Free heap memory where the old population was // <<<<<<<<< { BUG HERE <- }
+    pop.reset(); // Free heap memory where the old population was
      
     return newPopulation; // Return pointer to the new Population object
     
