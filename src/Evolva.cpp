@@ -111,7 +111,8 @@ void Evolva::bang(long inlet) {
     if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
     {
         // X X X X DEBUGGING HERE X X X X X
-        ////myPopulation = Evolution::evolvePopulation(myPopulation); //<<<<<<<<<<<< { *BUG HERE }
+        myPopulation = Evolution::evolvePopulation(myPopulation); //<<<<<<<<<<<< { *BUG HERE  - STEP INTO THE FUNCTION }
+        // X X X X
         generationCount++;
         std::string str = "Generation: " + std::to_string(generationCount) 
                         +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness());

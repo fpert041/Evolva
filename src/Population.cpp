@@ -22,36 +22,43 @@ Population::Population(std::vector<std::string> originals){
     }
 }
 
-Population::Population(int popSize, bool init){
-    if(popSize < 2) popSize = 2; // minim population size
+Population::Population(int popSize, bool init) : individuals(popSize){
+    if(popSize < 2) throw 11; // minim population size = 2
     
     usePredefined = false;
+    //post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
+    
     if(init){
         if(usePredefined){
             std::shared_ptr<Individual> alpha(new Individual("101010101010"));
             std::shared_ptr<Individual> beta(new Individual("010010101101"));
-            if(popSize%2 != 0) individuals.push_back(beta);
             
-            for(int i=0; i<floor(popSize/2); ++i){
-                individuals.push_back(alpha); // push back individual's smart_pointer onto our vector of "individial"s on the stack
-                individuals.push_back(beta);
+            // populate this object's array of beings with the above 2 individuals
+            int i = 0;
+            for(; i < size()/2; ++i){
+                individuals[i] = alpha;
+            } for (; i < size(); ++i){
+                individuals[i] = beta;
             }
+            
         } else {
             // Loop and create individuals
             for (int i = 0; i < size(); i++)
             {
                 std::shared_ptr<Individual> newbie(new Individual()); // initialise individual on the heap (using a smart pointer)
-                individuals.push_back(newbie); // push back individual's smart_pointer onto our vector of "individial"s on the stack
+                individuals[i] = newbie; // push back individual's smart_pointer onto our vector of "individial"s on the stack
             }
         }
     }
 }
 
 Population::Population(int popSize, std::string original) : individuals(popSize){
+    
     //post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
     //post(std::to_string(size()).c_str());
+    
     usePredefined = false;
-        //individuals = std::vector<std::shared_ptr<Individual> >(popSize); // LOOK AT THE : ABOVE FOR BEST INITIALISAZION
+        //individuals = std::vector<std::shared_ptr<Individual> >(popSize); // REPLACED BY ":" ABOVE FOR BEST/FASTER INITIALISAZION
     for (int i = 0; i < size(); i++)
     {
         std::shared_ptr<Individual> newbie(new Individual(original)); // initialise individual on the heap (using a smart pointer)
