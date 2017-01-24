@@ -20,13 +20,34 @@ Individual::Individual(){
     srand(seed); /* seed random number generator */
 #endif
     fitness = 0;
-    
+
     genes = std::vector<int>(defaultGeneLength); // default genotype length
     
     newBeing(); // random initialisation
-    
-    srand(seed); /* seed random number generator */
 }
+
+
+Individual::Individual(bool lengthVariation){ // possible TODO: A BOOL LIKE THIS COULD BE INSERT IN ALL CONSTRUCTORS
+    
+#ifndef RANDOM_SEED
+#define RANDOM_SEED
+    const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
+    srand(seed); /* seed random number generator */
+#endif
+    fitness = 0;
+    
+    int length = defaultGeneLength;
+    
+    if(lengthVariation){ // if genotype variations are allowed: randomise genotype length wothin reason
+        length += rand()%2;
+    }
+    
+    genes = std::vector<int>(length); // non necessarily fixed genotype length
+    
+    
+    newBeing(); // random initialisation
+}
+
 
 Individual::Individual(std::string genotype){
     
@@ -47,6 +68,22 @@ Individual::Individual(std::string genotype){
            genes[i]=0;
         }
     }
+}
+
+
+Individual::Individual(int genotypeSize){
+    
+#ifndef RANDOM_SEED
+#define RANDOM_SEED
+    const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
+    srand(seed); /* seed random number generator */
+#endif
+    fitness = 0;
+    
+    genes = std::vector<int>(genotypeSize); // Genes-vector length initialised according to the input genotype
+    
+    newBeing(); // random initialisation
+
 }
 
 //--------------------------------------------------------------------------------------------

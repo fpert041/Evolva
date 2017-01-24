@@ -16,10 +16,8 @@ The external compiles, interfaces with Max and can launch a separate thread. The
 ### ISSUES: 
 
 - At the moment it compiles and runs in Max, but I am having troubles stabilizing the 2ndary thread (mutexes, safe termination etc):
-    * If I uncomment the methods that should produce the PHENOTYPE I have a full compilation but Max crashes (probably due to a pointer issue since it simply shuts down without an error log)
-    * If I implement the full threading system as I thought it may need to run, Max crashes too
-    * At present, the comments where I placed //<<<<<<<< after the line, are the ones I need but which make the program crash if uncommented
-    * The issues are most probably under the hood, so I will have to follow these methods/instructions and see what actually causes the bug
+    * If I implement the full threading system (mutex - safe), as I thought it may need to run, Max crashes
+    * At present, I would like to integrate the comments where I placed // <<<<<<<< after the line - Note: they are commented out because make the program crash if uncommented
 
 - In "Evolva::threaded_function(...)":
 
@@ -37,20 +35,15 @@ if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of n
 systhread_exit(0);
 ```
 
-- In "Evolva::bang(...)":
+- In "Evolva::bang(...)": (not a crash critical bug but the evolutionary rules may need tweaking)
 
 ```
-// Evolution the population by one step until we reach an optimum solution //<<<<<<<<<<<<
-//post(Goals::getSolution().c_str()); //DEBUGGING //
-//post(myPopulation->getFittest()->toString().c_str()); //DEBUGGING //
-post(std::to_string( Goals::getMaxFitness() ).c_str()); //DEBUGGING //
-
+// Evolution the population by one step until we reach an optimum solution
 if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
 {
-    // X X X X DEBUGGING HERE X X X X X
-    ////myPopulation = Evolution::evolvePopulation(myPopulation); //<<<<<<<<<<<< { *BUG HERE }
+    myPopulation = Evolution::evolvePopulation(myPopulation);  // WATCH OUT * * * < Check there is appropriate variation/selevtion for evolutionary purposes - FITTEST's FITNESS DOES NOT SEEM TO GROW THAT WELL!
     generationCount++;
-    std::string str = "Generation: " + std::to_string(generationCount)
+    std::string str = "Generation: " + std::to_string(generationCount) 
     +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness());
     post(str.c_str());
 }
@@ -59,8 +52,9 @@ if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
 
 ### TODO:
 
- - Fix the crash issues when invoking selection/fitness/population methods from the main Evolva class
- - Fix the crash issues due to threading mutex protection and safe shutting
+ - Make sure the threading system is safe (possibly exploring why mutex bloks are crashing max if included)
+ - Make sure evolution works
+ - Explore output's musical scope + possibly increase the number of note sent out at each bang 
 
 
 ## WARNING: WIP!!!

@@ -14,7 +14,7 @@
 
 Population::Population(std::vector<std::string> originals){
     usePredefined = false;
-    //individuals = std::vector<Individual>(originals.size());
+    // individuals = std::vector<Individual>(originals.size());
     
     for(int i=0; i<originals.size(); ++i){
         std::shared_ptr<Individual> newbie(new Individual(originals[i])); // initialise individual on the heap (using a smart pointer)
@@ -26,9 +26,9 @@ Population::Population(int popSize, bool init) : individuals(popSize){
     if(popSize < 2) throw 11; // minim population size = 2
     
     usePredefined = false;
-    //post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
+    // post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
     
-    if(init){
+    if(init){ // spawn an initial population....
         if(usePredefined){
             std::shared_ptr<Individual> alpha(new Individual("101010101010"));
             std::shared_ptr<Individual> beta(new Individual("010010101101"));
@@ -49,16 +49,16 @@ Population::Population(int popSize, bool init) : individuals(popSize){
                 individuals[i] = newbie; // push back individual's smart_pointer onto our vector of "individial"s on the stack
             }
         }
-    }
+    } /* end_if (init) */ //....otherwise, just create the object with an empty vector of size "popSize"
 }
 
 Population::Population(int popSize, std::string original) : individuals(popSize){
     
-    //post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
-    //post(std::to_string(size()).c_str());
+    // post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
+    // post(std::to_string(size()).c_str());
     
     usePredefined = false;
-        //individuals = std::vector<std::shared_ptr<Individual> >(popSize); // REPLACED BY ":" ABOVE FOR BEST/FASTER INITIALISAZION
+        // individuals = std::vector<std::shared_ptr<Individual> >(popSize); // REPLACED BY ":" ABOVE FOR BEST/FASTER INITIALISAZION
     for (int i = 0; i < size(); i++)
     {
         std::shared_ptr<Individual> newbie(new Individual(original)); // initialise individual on the heap (using a smart pointer)

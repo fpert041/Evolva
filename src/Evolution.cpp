@@ -22,15 +22,7 @@ bool Evolution::elitism = false;
 // Evolve a population and return a pointer to the new population object
 std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Population> pop){
     
-     
-     // X X X X DEBUGGING HERE X X X X X // <<<<<<<<< { BUG WHEN newPopulation IS RETURNED }
     std::shared_ptr<Population> newPopulation(new Population(pop->size(), false));
-    
-    post(std::to_string(newPopulation->size()).c_str()); //DEBUGGING // OK
-    //post(newPopulation->getFittest()->toString().c_str()); // DEBUGGING // <<<<<<<<< { BUG HERE <- }
-    //post(std::to_string( newPopulation->getFittest()->getFitness()).c_str()); // DEBUGGING //
-    
-    newPopulation = pop; // DEBUGGING LINE! THIS PREVENTS THE CRASH
    
     // Keep the fittest
     if(elitism){
@@ -40,18 +32,21 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
     // Natural Selection + Reproduction with (Crossover + random mutation)
     int leaderSeat = (elitism == true ? 1 : 0);
     
-    for (int i = leaderSeat; i < pop->size(); i++)
+    for (int i = leaderSeat; i < pop->size(); i++) // WATCH OUT * * * < Check there is appropriate variation/selevtion
     {
-        // X X X X DEBUGGING HERE X X X X X // <<<<<<<<< { BUG HERE <- }
-        //std::shared_ptr<Individual> alpha = naturalSelection(pop);
-        //std::shared_ptr<Individual> beta = naturalSelection(pop);
+        std::shared_ptr<Individual> alpha = naturalSelection(pop);
+        std::shared_ptr<Individual> beta = naturalSelection(pop);
         
-        //std::shared_ptr<Individual> offspring = crossover(alpha, beta);
-        //newPopulation->saveIndividual(i, offspring);
-        //mutate(newPopulation->getIndividual(i));
         
+        std::shared_ptr<Individual> offspring = crossover(alpha, beta);
+        
+        newPopulation->saveIndividual(i, offspring);
+        mutate(newPopulation->getIndividual(i));
     }
     
+//    post(std::to_string(newPopulation->size()).c_str()); //DEBUGGING // OK
+//    post(newPopulation->getFittest()->toString().c_str()); // DEBUGGING // OK
+//    post(std::to_string( newPopulation->getFittest()->getFitness()).c_str()); // DEBUGGING // OK
     
     pop.reset(); // Free heap memory where the old population was
      

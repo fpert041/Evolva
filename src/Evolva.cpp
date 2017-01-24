@@ -31,6 +31,9 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) {
     myPopulation.reset(new Population(100, originalPop));
     notesToPlay = std::vector<int>();
     
+    // Need just one note per 'bang' fow now
+    notesPerUpdate = 1;
+    
     post("object created");
 }
 
@@ -49,6 +52,8 @@ void Evolva::thread_function(int notesPerUpdate, int bangInterval, std::vector<i
 {
     //    clock_t start = clock();
     //    long startTime = floor(((float)start)/CLOCKS_PER_SEC*1000);
+    
+    // X X X X DEBUGGING HERE X X X X X
     
     int notesPlayed = 0;
     //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
@@ -103,16 +108,14 @@ void Evolva::bang(long inlet) {
     //int i = 1 + (rand() % 6); /* random int between 1 and 6 */
     //double d = rand()/RAND_MAX; /* random double-float between 0 and 1 */
     
-    // Evolution the population by one step until we reach an optimum solution //<<<<<<<<<<<<
-    //post(Goals::getSolution().c_str()); //DEBUGGING //
-    //post(myPopulation->getFittest()->toString().c_str()); //DEBUGGING //
-    post(std::to_string( Goals::getMaxFitness() ).c_str()); //DEBUGGING //
+    // post(Goals::getSolution().c_str()); //DEBUGGING //
+    // post(myPopulation->getFittest()->toString().c_str()); //DEBUGGING //
+    // post(std::to_string( Goals::getMaxFitness() ).c_str()); //DEBUGGING //
     
+    // Evolution the population by one step until we reach an optimum solution
     if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
     {
-        // X X X X DEBUGGING HERE X X X X X
-        myPopulation = Evolution::evolvePopulation(myPopulation); //<<<<<<<<<<<< { *BUG HERE  - STEP INTO THE FUNCTION }
-        // X X X X
+        myPopulation = Evolution::evolvePopulation(myPopulation);  // WATCH OUT * * * < Check there is appropriate variation/selevtion for evolutionary purposes - FITTEST's FITNESS DOES NOT SEEM TO GROW THAT WELL!
         generationCount++;
         std::string str = "Generation: " + std::to_string(generationCount) 
                         +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness());
@@ -129,7 +132,7 @@ void Evolva::bang(long inlet) {
     // Set list of notes to play
     notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate);
     
-    // Play notes in a NEW THREAD: // X X X X DEBUGGING HERE X X X X X
+    // Play notes in a NEW THREAD:
     mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
             // -> systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
     

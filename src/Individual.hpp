@@ -22,7 +22,7 @@
 class Individual{
 private:
     
-    int defaultGeneLength = 96;
+    int defaultGeneLength = 48;
     std::vector<int> genes; // Vector to store genes
     
     // Score
@@ -34,7 +34,11 @@ public:
     Individual(); // default constructor
     ~Individual(); // destructor
     
+    Individual(bool); // default constructor allowing for length variation
+    
     Individual(std::string); // constructor taking in a genotype
+    
+    Individual(int); // constructor taking a user defined length for the genotype
 
     void newBeing(); // Create a random individual
     

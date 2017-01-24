@@ -43,8 +43,8 @@ public:
     std::shared_ptr<Population> myPopulation;
     std::vector<int> notesToPlay;
     
-    // Need just one note per 'bang' fow now
-    int notesPerUpdate = 1;
+    // How many notes per 'bang' to be output
+    int notesPerUpdate;
     // Initialize variable to contain new solution during transitions
     std::string newSol;
     // Set how many milliseconds between notes
