@@ -112,7 +112,7 @@ void Evolva::bang(long inlet) {
     // post(myPopulation->getFittest()->toString().c_str()); //DEBUGGING //
     // post(std::to_string( Goals::getMaxFitness() ).c_str()); //DEBUGGING //
     
-    // Evolution the population by one step until we reach an optimum solution
+    // Evolve the population by one step until we reach an optimum solution
     if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
     {
         myPopulation = Evolution::evolvePopulation(myPopulation);  // WATCH OUT * * * < Check there is appropriate variation/selevtion for evolutionary purposes - FITTEST's FITNESS DOES NOT SEEM TO GROW THAT WELL!
@@ -142,20 +142,20 @@ void Evolva::bang(long inlet) {
 
 // (FLOAT) : called when a float is received into an inlet
 void Evolva::inFloat(long inlet, double v) {
-    post("inlet %ld float %f", inlet, v);
     
     bangInterval = v;
     
-    //outlet_float(m_outlets[0], v);
+    // post("inlet %ld float %f", inlet, v);
+    // outlet_float(m_outlets[0], v);
 }
 
 // (INTEGER) : called when an int is received into an inlet
 void Evolva::inInt(long inlet, long v) {
-    post("inlet %ld int %ld", inlet, v);
     
     bangInterval = v;
     
-    //outlet_int(m_outlets[0], v);
+    // post("inlet %ld int %ld", inlet, v);
+    // outlet_int(m_outlets[0], v);
 }
 
 
@@ -164,17 +164,20 @@ void Evolva::inInt(long inlet, long v) {
 // Other interface methods: //
 
 // Change the solution of the GA
-void Evolva::setSolution(std::string newSolution)
+void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
 {
-    // Implement logic to change solution here
+    // post( std::to_string(atom_getfloat(av)).c_str() );
     
-    if(newSolution.compare("red")) {
+    // Implement logic to change solution here
+    char* newSolution =  atom_string(av);//atom_getsym(av)->s_name;
+    
+    if(strcmp(newSolution,"red")) {
         newSol = "110010111001100000000000100000000000000000000000";
-    } else if(newSolution.compare("blue")) {
+    } else if(strcmp(newSolution,"blue")) {
         newSol = "000000000000101101011010100000000000000000000000";
-    } else if(newSolution.compare("green")) {
+    } else if(strcmp(newSolution,"green")) {
         newSol = "000000000000000000000000101010110101100000000000";
-    } else if(newSolution.compare("yellow")) {
+    } else if(strcmp(newSolution,"yellow")) {
         newSol = "000000000000000000000000000000000000101011010101";
     } else {
         post("Input string for 'newSolution(std::string)' is not recognized \nUse: 'red', 'blue', 'yellow' and 'green' instead");
@@ -191,11 +194,12 @@ void Evolva::setSolution(std::string newSolution)
 }
 
 // Overload the 'setSolution' method to respond differently to different data types
-void Evolva::setSolution(long a)
-{
-    std::string newSolution = std::to_string(a);
-    generationCount = 0;
-}
+// TIP: TRY TO GO DOWN ANOTHER ROUTE -THIS MAY CREATE ISSUES WITH MAX's REGISTRATION REQUIREMENTS IN MAIN()
+//void Evolva::setSolution(long a)
+//{
+//    std::string newSolution = std::to_string(a);
+//    generationCount = 0;
+//}
 
 
 //---------------------------------------------------------------------------------------------

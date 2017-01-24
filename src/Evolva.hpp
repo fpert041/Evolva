@@ -59,8 +59,7 @@ public:
     
     void bang(long inlet);
     
-    void setSolution(std::string);
-    void setSolution(long);
+    void setSolution(long inlet, t_symbol * s, long ac, t_atom * av);
     
     void inFloat(long inlet, double v);
     

@@ -11,6 +11,7 @@ C74_EXPORT int main(void) {
     REGISTER_METHOD(Evolva, bang);
     REGISTER_METHOD_LONG(Evolva, inInt);
     REGISTER_METHOD_FLOAT(Evolva, inFloat);
+    REGISTER_METHOD_GIMME(Evolva, setSolution);
     
     // methods for handling float/int messages directly (no method name in Max):
     REGISTER_INLET_LONG(Evolva, inInt);
