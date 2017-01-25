@@ -5,25 +5,29 @@ EVOLVA
 
 ### STATUS:
 
-Structure in place: 
+
+#### Version: 0.3 (alpha)
+
+Structure: 
  - main() cpp calls object's class-wrapper (Evolva hpp+cpp) and registers the external's interface functions for Max.
 
  - The 'Evolva' class calls up the main algorithmic structure (Evolution) and the population-defining classes (Population <- Individual). 
  - "FitnessFuncs" hpp+cpp contain the global methods/variables that set the target solution ("Goal" namespace)
 
-The external compiles, interfaces with Max and can launch a separate thread. There are at least two types of bugs that prevent me from making the external fully operational (see below). 
 
-### ISSUES: 
+### WIP/TODO: 
 
-- At the moment it compiles and runs in Max, but I am having troubles stabilizing the 2ndary thread (mutexes, safe termination etc):
-    * If I implement the full threading system (mutex - safe), as I thought it may need to run, Max crashes
-    * At present, I would like to integrate the comments where I placed // <<<<<<<< after the line - Note: they are commented out because make the program crash if uncommented
+- At the moment it compiles and runs in Max. It outputs MIDI notes based on an simple mapping of the evolving fittest individual's genetic code
 
-- In "Evolva::threaded_function(...)":
+- Notes on things to look at:
+    * The multithreading system does not use mutex locks. It seems stable enough but... is it? Max crashes if I add mutexes (I placed them as comments in the code to remind myself)
+    * I would like to make the musical mapping of the genotype easierr, more complex and more flexible.
+
+- Mutex possible issue in "Evolva::threaded_function(...)":
 
 ```
 int notesPlayed = 0;
-//<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+//<<<<<<<<<<<<<<<< { *BUG IN MUTEX? }
 /////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
 if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of notes
     while(notesPlayed < notesPerUpdate){
@@ -31,11 +35,11 @@ if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of n
         (...)
     }
 }
-////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX? }
 systhread_exit(0);
 ```
 
-- In "Evolva::bang(...)": (not a crash critical bug but the evolutionary rules may need tweaking)
+- In "Evolva::bang(...)": (can the evolutionary rules be improved?)
 
 ```
 // Evolution the population by one step until we reach an optimum solution
@@ -48,13 +52,6 @@ if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
     post(str.c_str());
 }
 ```
-
-
-### TODO:
-
- - Make sure the threading system is safe (possibly exploring why mutex bloks are crashing max if included)
- - Make sure evolution works
- - Explore output's musical scope + possibly increase the number of note sent out at each bang 
 
 
 ## WARNING: WIP!!!
