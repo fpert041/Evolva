@@ -41,9 +41,15 @@ public:
     
     std::shared_ptr<Individual> getFittest(); // return fittest
     
+    // Get a smart pointer to the <INT> fittest individuals
+    std::vector< std::shared_ptr<Individual> >getFittests(int);
+    
     /* Public methods */
     // Get population size
     int size(); // return individuals.length;
+    
+    // Sort population
+    void bubbleSort();
     
     // Save individual
     void saveIndividual(int, std::shared_ptr<Individual>); // params: (index, indiv) => individuals[index] = indiv;

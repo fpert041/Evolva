@@ -8,6 +8,9 @@
 
 #include "Population.hpp"
 
+int maxi(int x, int y);
+void TopDownSplitMerge(std::vector<std::shared_ptr<Individual> >& A, int, int, std::vector<std::shared_ptr<Individual> >& B); // fwd declare from the bottom of the file
+
 
 //--------------------------------------------------------------------------------------------
 // CONSTRUCTORS
@@ -102,8 +105,8 @@ std::shared_ptr<Individual> Population::getFittest(){
     std::shared_ptr<Individual> fittest = individuals[0]; // the first being is initially the fittest...
     
     for(int i=0; i<individuals.size(); ++i){
-        if(fittest->getFitness() <= individuals[i]->getFitness()){
-            fittest.swap(individuals[i]); // ...but, as we loop through our vector of beings, we compare their fitness and successively select a new fittest if we find one
+        if(fittest->getFitness() < individuals[i]->getFitness()){
+            fittest = individuals[i]; // ...but, as we loop through our vector of beings, we compare their fitness and successively select a new fittest if we find one
         }
     }
     
@@ -111,6 +114,76 @@ std::shared_ptr<Individual> Population::getFittest(){
     //post(fittest->toString().c_str()); // { THIS is returning a binary string of 48 genes }
 }
 
+// Get a smart pointer to the fittest individual
+std::vector<std::shared_ptr<Individual> > Population::getFittests(int n){
+    
+
+    //...code
+}
+
+void Population::bubbleSort(){
+    std::vector<std::shared_ptr<Individual> > temp = this->individuals;
+    
+    TopDownSplitMerge(this->individuals, 0, temp.size(),  temp);
+    
+}
 
 
+void TopDownSplitMerge(std::vector<std::shared_ptr<Individual> >& input, int left, int right, std::vector<std::shared_ptr<Individual> >& scratch){
+    
+    /* base case: one element */
+    if(right == left + 1)
+    {
+        return;
+    }
+    
+    int i = 0;
+    int length = right - left;
+    int midpoint_distance = length/2;
+    /* l and r are to the positions in the left and right subarrays */
+    int l = left, r = left + midpoint_distance;
+    
+    /* sort each subarray */
+    TopDownSplitMerge(input, left, left + midpoint_distance, scratch);
+    TopDownSplitMerge(input, left + midpoint_distance, right, scratch);
+    
+    /* merge the arrays together using scratch for temporary storage */
+    for(i = 0; i < length; i++)
+    {
+        /* Check to see if any elements remain in the left array; if so,
+         * we check if there are any elements left in the right array; if
+         * so, we compare them.  Otherwise, we know that the merge must
+         * use take the element from the left array */
+        if(l < left + midpoint_distance &&
+           (r == right || maxi(input[l]->getFitness(), input[r]->getFitness()) == input[l]->getFitness()))
+        {
+            scratch[i] = input[l];
+            l++;
+        }
+        else
+        {
+            scratch[i] = input[r];
+            r++;
+        }
+    }
+    /* Copy the sorted subarray back to the input */
+    for(i = left; i < right; i++)
+    {
+        input[i] = scratch[i - left];
+    }
+    
+}
+
+/* Helper function for finding the max of two numbers */
+int maxi(int x, int y)
+{
+    if(x > y)
+    {
+        return x;
+    }
+    else
+    {
+        return y;
+    }
+}
 

@@ -16,4 +16,7 @@ C74_EXPORT int main(void) {
     // methods for handling float/int messages directly (no method name in Max):
     REGISTER_INLET_LONG(Evolva, inInt);
     REGISTER_INLET_FLOAT(Evolva, inFloat);
+    
+    // method called when mouse is hovering over an inlet or outlet
+    REGISTER_METHOD_ASSIST(Evolva, assist);
 }

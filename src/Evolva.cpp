@@ -31,8 +31,11 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) {
     myPopulation.reset(new Population(100, originalPop));
     notesToPlay = std::vector<int>();
     
-    // Need just one note per 'bang' fow now
-    notesPerUpdate = 1;
+    // 2 note per 'bang' fow now
+    notesPerUpdate = 2;
+    
+    // Set how many milliseconds between notes
+    notesInterval = 500;
     
     post("object created");
 }
@@ -48,7 +51,7 @@ t_systhread thread; // thread ID
 t_systhread_mutex	t_mutex; // mutual exclusion lock for threadsafety
 
 // threadable function
-void Evolva::thread_function(int notesPerUpdate, int bangInterval, std::vector<int>& notesToPlay)
+void Evolva::thread_function(int notesPerUpdate, int notesInterval, std::vector<int>& notesToPlay)
 {
     //    clock_t start = clock();
     //    long startTime = floor(((float)start)/CLOCKS_PER_SEC*1000);
@@ -56,20 +59,21 @@ void Evolva::thread_function(int notesPerUpdate, int bangInterval, std::vector<i
     // X X X X DEBUGGING HERE X X X X X
     
     int notesPlayed = 0;
-    //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
-    /////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting
     if(!notesToPlay.empty()){ // make sure "notes to play" IS_NOT an empty list of notes
         while(notesPlayed < notesPerUpdate){
+            
+            ////systhread_mutex_lock(t_mutex); //make sure that other threads cannot change critical variables whilst outputting //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+            
             outlet_int(m_outlets[0], notesToPlay[notesPlayed] + 24); // output notes as midi {TESTED :)}
-            //        long ac = 200;
-            //        t_atom * av;
-            //        outlet_anything(m_outlets[0], gensym("test"), ac, av);
             notesPlayed++;
+            
+            ////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
+            
             if(notesPlayed < notesPerUpdate)
             {
                 try
                 {
-                    systhread_sleep((long) (bangInterval / notesPerUpdate));
+                    systhread_sleep((long) (notesInterval / notesPerUpdate));
                 }
                 
                 catch (ExceptionInformation ei)
@@ -81,7 +85,6 @@ void Evolva::thread_function(int notesPerUpdate, int bangInterval, std::vector<i
             }
         }
     }
-    ////systhread_mutex_unlock(t_mutex);  //<<<<<<<<<<<<<<<< { *BUG IN MUTEX! }
     systhread_exit(0);
 }
 
@@ -89,7 +92,7 @@ void Evolva::thread_function(int notesPerUpdate, int bangInterval, std::vector<i
 
 /* Create worker thread: this function gets called whenever a thread is created */
 const void Evolva::run(){
-    thread_function(notesPerUpdate, bangInterval, this->notesToPlay);
+    thread_function(notesPerUpdate, notesInterval, this->notesToPlay);
     
     post("flag: circular threading works %i",notesPerUpdate);
 }
@@ -118,7 +121,8 @@ void Evolva::bang(long inlet) {
         myPopulation = Evolution::evolvePopulation(myPopulation);  // WATCH OUT * * * < Check there is appropriate variation/selevtion for evolutionary purposes - FITTEST's FITNESS DOES NOT SEEM TO GROW THAT WELL!
         generationCount++;
         std::string str = "Generation: " + std::to_string(generationCount) 
-                        +  " Fittest: " + std::to_string(myPopulation->getFittest()->getFitness());
+                        +  " Fittest's fitness: " + std::to_string(myPopulation->getFittest()->getFitness())
+                        + " Maximum possible fitness: " + std::to_string(Goals::getMaxFitness());
         post(str.c_str());
     }
     else
@@ -143,7 +147,15 @@ void Evolva::bang(long inlet) {
 // (FLOAT) : called when a float is received into an inlet
 void Evolva::inFloat(long inlet, double v) {
     
-    bangInterval = v;
+    switch (inlet) {
+        case 0:
+            if(v>0 && v<6) notesPerUpdate = v; //change notes output after each bang --there is a safety ceiling of 6
+            break;
+            
+        case 1:
+            if(v>50) notesInterval = v;
+            break;
+    }
     
     // post("inlet %ld float %f", inlet, v);
     // outlet_float(m_outlets[0], v);
@@ -152,7 +164,16 @@ void Evolva::inFloat(long inlet, double v) {
 // (INTEGER) : called when an int is received into an inlet
 void Evolva::inInt(long inlet, long v) {
     
-    bangInterval = v;
+    switch (inlet) {
+        case 0:
+            if(v>0) notesPerUpdate = v;
+            break;
+            
+        case 1:
+            if(v>50) notesInterval = v;
+            break;
+    }
+    
     
     // post("inlet %ld int %ld", inlet, v);
     // outlet_int(m_outlets[0], v);
@@ -166,9 +187,11 @@ void Evolva::inInt(long inlet, long v) {
 // Change the solution of the GA
 void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
 {
+    //if(inlet>0) return;
+    
     // post( std::to_string(atom_getfloat(av)).c_str() );
     
-    // Implement logic to change solution here
+    // Implement logic to change solution here:
     char* newSolution =  atom_string(av);//atom_getsym(av)->s_name;
     
     if(strcmp(newSolution,"red")) {
@@ -181,6 +204,7 @@ void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
         newSol = "000000000000000000000000000000000000101011010101";
     } else {
         post("Input string for 'newSolution(std::string)' is not recognized \nUse: 'red', 'blue', 'yellow' and 'green' instead");
+        return;
     }
     
     // Set new fitness string
@@ -233,6 +257,31 @@ std::vector<int> Evolva::chooseNotes(std::string fittest, int howManyNotes)
 }
 
 //---------------------------------------------------------------------------------------------
+
+
+// INLET/OUTLET ASSIST POPUP
+
+void Evolva::assist(void* b, long m, long a, char* s) { //template function that gets triggered when "ASSIST_INLET"
+    //is invoked by Max
+    //param "a" identify the inlet/outlet
+    if (m == ASSIST_INLET) { //inlet
+        switch (a) {
+            case 0: sprintf(s,
+                            "\n'setSolution' + <string> : trigger change to current GA's solution using colour-names IDs 'red' 'green' 'blue' 'yellow' \n<int> : set n# of notes output at each update");
+                break;
+            case 1: sprintf(s, "\n<int> : set ms between output notes");
+                break;
+        }
+    }
+    else {	// outlet
+        switch (a) {
+            case 0 : sprintf(s, "\nMIDI notes out");
+                break;
+            case 1 : sprintf(s, "\n--useless atm--");
+                break;
+        }
+    }
+}
 
 
 /* -- for MSP objects only (REMEMBER TO ADD IT IF THIS BECOMES ONE IN FUTURE!)---

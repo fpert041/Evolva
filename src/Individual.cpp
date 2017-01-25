@@ -99,7 +99,7 @@ Individual::~Individual(){}
 
 void Individual::newBeing(){
     for(int i=0; i<genes.size(); ++i){
-        genes[i] = floor(rand()/RAND_MAX +0.5);
+        genes[i] = floor(rand()/(double)RAND_MAX +0.5);
     }
 }
 
@@ -110,7 +110,7 @@ void Individual::newBeing(std::string genotype){
     
     for(int i=0; i<genes.size(); ++i){
         if(strncmp(&genotype[i],"1", 1)){
-            genes[i] = floor(rand()/RAND_MAX +0.85); // -> Allow random mutation but keep it unlikely
+            genes[i] = floor(rand()/(double)RAND_MAX +0.85); // -> Allow random mutation but keep it unlikely
         }
     }
 }

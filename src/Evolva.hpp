@@ -44,17 +44,20 @@ public:
     std::vector<int> notesToPlay;
     
     // How many notes per 'bang' to be output
-    int notesPerUpdate;
+    volatile int notesPerUpdate;
     // Initialize variable to contain new solution during transitions
     std::string newSol;
     // Set how many milliseconds between notes
-    volatile float bangInterval = 500;
+    volatile float notesInterval;
     
     void thread_function(int notesPerUpdate, int bangInterval, std::vector<int>&);
     
     const void run();
     
     const void quit();
+    
+    //inlet/outlet assist popup
+    void assist(void*, long, long, char*);
     
     
     void bang(long inlet);
