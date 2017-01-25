@@ -32,7 +32,7 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
     // Keep the fittest
     if(elitism){
         for(int i= 0; i<leaders; ++i){
-            newPopulation->saveIndividual(0, pop->getIndividual(i));
+            newPopulation->saveIndividual(i, pop->getIndividual(i));
         }
     }
     
