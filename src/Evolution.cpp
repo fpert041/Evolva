@@ -54,14 +54,6 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
         mutate(newPopulation->getIndividual(i));
     }
     
-    post(std::to_string(newPopulation->getFittest()->getFitness()).c_str());
-    post(std::to_string(newPopulation->getIndividual(0)->getFitness()).c_str());
-    post(std::to_string(newPopulation->getIndividual(1)->getFitness()).c_str());
-    post(std::to_string(newPopulation->getIndividual(10)->getFitness()).c_str());
-    post(std::to_string(newPopulation->getIndividual(20)->getFitness()).c_str());
-    post(std::to_string(newPopulation->getIndividual(50)->getFitness()).c_str());
-    post(std::to_string(newPopulation->getIndividual(90)->getFitness()).c_str());
-    
 //    post(std::to_string(newPopulation->size()).c_str()); //DEBUGGING // OK
 //    post(newPopulation->getFittest()->toString().c_str()); // DEBUGGING // OK
 //    post(std::to_string( newPopulation->getFittest()->getFitness()).c_str()); // DEBUGGING // OK

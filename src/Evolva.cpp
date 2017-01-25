@@ -136,12 +136,14 @@ void Evolva::bang(long inlet) {
     // Set list of notes to play
     notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate);
     
+    outlet_anything(m_outlets[1], gensym(myPopulation->getFittest()->toString().c_str()), 0, NULL);
+    
     // Play notes in a NEW THREAD:
     mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
             // -> systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
     
     
-    post("bang in inlet %i!", inlet);
+    //post("bang in inlet %i!", inlet);
 }
 
 // (FLOAT) : called when a float is received into an inlet
