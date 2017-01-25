@@ -8,16 +8,14 @@
 
 #include "Population.hpp"
 
-int maxi(int x, int y);
-void TopDownSplitMerge(std::vector<std::shared_ptr<Individual> >& A, int, int, std::vector<std::shared_ptr<Individual> >& B); // fwd declare from the bottom of the file
+
+
 
 
 //--------------------------------------------------------------------------------------------
 // CONSTRUCTORS
 
-Population::Population(std::vector<std::string> originals){
-    usePredefined = false;
-    // individuals = std::vector<Individual>(originals.size());
+Population::Population(std::vector<std::string> originals) : usePredefined(false), sorted(false){
     
     for(int i=0; i<originals.size(); ++i){
         std::shared_ptr<Individual> newbie(new Individual(originals[i])); // initialise individual on the heap (using a smart pointer)
@@ -25,10 +23,9 @@ Population::Population(std::vector<std::string> originals){
     }
 }
 
-Population::Population(int popSize, bool init) : individuals(popSize){
+Population::Population(int popSize, bool init) : individuals(popSize), usePredefined(false), sorted(false){
     if(popSize < 2) throw 11; // minim population size = 2
     
-    usePredefined = false;
     // post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
     
     if(init){ // spawn an initial population....
@@ -55,18 +52,19 @@ Population::Population(int popSize, bool init) : individuals(popSize){
     } /* end_if (init) */ //....otherwise, just create the object with an empty vector of size "popSize"
 }
 
-Population::Population(int popSize, std::string original) : individuals(popSize){
+Population::Population(int popSize, std::string original) : individuals(popSize), usePredefined(false), sorted(false){
     
     // post("flag!!!"); //DEBUGGING LINE <- use this to find out which constructor you are using
-    // post(std::to_string(size()).c_str());
-    
-    usePredefined = false;
+
         // individuals = std::vector<std::shared_ptr<Individual> >(popSize); // REPLACED BY ":" ABOVE FOR BEST/FASTER INITIALISAZION
     for (int i = 0; i < size(); i++)
     {
         std::shared_ptr<Individual> newbie(new Individual(original)); // initialise individual on the heap (using a smart pointer)
         individuals[i] = newbie;
     }
+    
+    // post(original.c_str());
+    // post(getFittest()->toString().c_str());
 }
 
 //--------------------------------------------------------------------------------------------
@@ -87,6 +85,8 @@ int Population::size()
 // Save given individual by replacing the content of the smart pointer at the index provided
 void Population::saveIndividual(int index, std::shared_ptr<Individual> alice)
 {
+    sorted = false;
+    
     individuals[index].swap(alice);
 }
 
@@ -117,19 +117,31 @@ std::shared_ptr<Individual> Population::getFittest(){
 // Get a smart pointer to the fittest individual
 std::vector<std::shared_ptr<Individual> > Population::getFittests(int n){
     
-
+    if(!sorted)
+        mergeSort();
+    
+    std::vector<std::shared_ptr<Individual> > v1(individuals.begin(), individuals.begin() + n);
+    return v1;
     //...code
 }
 
-void Population::bubbleSort(){
+void Population::mergeSort(){
     std::vector<std::shared_ptr<Individual> > temp = this->individuals;
     
     TopDownSplitMerge(this->individuals, 0, temp.size(),  temp);
-    
+    sorted = true;
 }
 
 
-void TopDownSplitMerge(std::vector<std::shared_ptr<Individual> >& input, int left, int right, std::vector<std::shared_ptr<Individual> >& scratch){
+
+
+
+//--------------------------------------------------------------------------------------------
+
+// HELPERS
+
+void Population::TopDownSplitMerge(std::vector<std::shared_ptr<Individual> >& input, int left, int right, std::vector<std::shared_ptr<Individual> >& scratch){
+    
     
     /* base case: one element */
     if(right == left + 1)
@@ -175,7 +187,7 @@ void TopDownSplitMerge(std::vector<std::shared_ptr<Individual> >& input, int lef
 }
 
 /* Helper function for finding the max of two numbers */
-int maxi(int x, int y)
+int Population::maxi(int x, int y)
 {
     if(x > y)
     {

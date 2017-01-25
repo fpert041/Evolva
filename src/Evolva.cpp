@@ -13,7 +13,13 @@
 // inherit from the MSP base class and a thread-building friendly template class:
 
 
-Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) {
+Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) :
+        solutionString("000000000000100000000000101010110101100000000000"),
+        originalPop("000000000000100000000000000000000000101010010011"),
+        newSol("000000000000000000000000000000000000101010010011"),
+        notesPerUpdate(2), // 2 note per 'bang' fow now
+        notesInterval (500) // Set how many milliseconds between notes
+{
     setupIO(2, 2);
 #ifndef RANDOM_SEED
 #define RANDOM_SEED
@@ -21,22 +27,12 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) {
     srand(seed); /* seed random number generator */
 #endif
     
-    solutionString = "000000000000100000000000101010110101100000000000";
-    originalPop ="000000000000100000000000000000000000101010010011";
-    
-    newSol="000000000000000000000000000000000000101010010011";
-    
     //Initialize goal solution and population
     Goals::setSolution(solutionString);
     myPopulation.reset(new Population(100, originalPop));
+    // post(myPopulation->getFittest()->toString().c_str());
+    
     notesToPlay = std::vector<int>();
-    
-    // 2 note per 'bang' fow now
-    notesPerUpdate = 2;
-    
-    // Set how many milliseconds between notes
-    notesInterval = 500;
-    
     post("object created");
 }
 
@@ -211,8 +207,10 @@ void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
     
     // Set new fitness string
     Goals::setSolution(newSol);
+    
     // Create a new population with previous string
-    myPopulation.reset(new Population(100, solutionString));
+     myPopulation.reset(new Population(100, solutionString));
+    
     // Replace old solution string with new one
     solutionString = newSol;
     // Reset generation count

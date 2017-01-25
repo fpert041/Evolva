@@ -63,9 +63,9 @@ Individual::Individual(std::string genotype){
     // Loop through each character of the input string and save it in our vector as an int
     for(int i=0; i<genotype.length(); ++i){
         if(strncmp(&genotype[i], "1", 1)){
-           genes[i]=1;
-        } else {
            genes[i]=0;
+        } else {
+           genes[i]=1;
         }
     }
 }

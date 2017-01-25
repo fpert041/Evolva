@@ -43,10 +43,10 @@ public:
     std::shared_ptr<Population> myPopulation;
     std::vector<int> notesToPlay;
     
-    // How many notes per 'bang' to be output
-    volatile int notesPerUpdate;
     // Initialize variable to contain new solution during transitions
     std::string newSol;
+    // How many notes per 'bang' to be output
+    volatile int notesPerUpdate;
     // Set how many milliseconds between notes
     volatile float notesInterval;
     

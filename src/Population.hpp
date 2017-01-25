@@ -22,6 +22,10 @@ class Population{
 private:
     std::vector<std::shared_ptr<Individual> > individuals;
     bool usePredefined;
+    
+    static void TopDownSplitMerge(std::vector<std::shared_ptr<Individual> >& A, int, int, std::vector<std::shared_ptr<Individual> >& B); // helper method for merge sort
+    
+    static int maxi(int x, int y); // return maximum between two integers
  
 public:
     /*
@@ -49,7 +53,9 @@ public:
     int size(); // return individuals.length;
     
     // Sort population
-    void bubbleSort();
+    void mergeSort();
+    
+    bool sorted;
     
     // Save individual
     void saveIndividual(int, std::shared_ptr<Individual>); // params: (index, indiv) => individuals[index] = indiv;

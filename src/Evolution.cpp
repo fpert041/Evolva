@@ -26,7 +26,7 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
     
     std::shared_ptr<Population> newPopulation(new Population(pop->size(), false));
    
-    pop->bubbleSort();
+    pop->mergeSort();
     int leaders = 4;
     
     // Keep the fittest

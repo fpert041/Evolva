@@ -18,7 +18,7 @@ class ThreadingHelp {
 public:
 
     static void *threaded_func(void *undefinedPtr){
-        post("working thread flag");
+        // post("working thread flag");
         
         T *t = (T *) undefinedPtr;
         t->run();
@@ -49,7 +49,7 @@ private:
     // NOT WORKING -- I THINK IT IS DUE TO THE PASSED-IN FUNCTION POINTER GOING OUT OF SCOPE? 0_o /**/
     
     static const void *threaded_func2(void *undefinedPtr){
-        post("working thread flag");
+        // post("working thread flag");
         
         void const (*pt2Function)(void) = NULL;
         pt2Function = (void const (*)(void)) undefinedPtr;
