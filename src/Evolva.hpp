@@ -70,6 +70,9 @@ public:
     
 private:
     
+    // Evolve the population:
+    void nextGeneration();
+    
     // Select and return a list of notes
     std::vector<int> chooseNotes(std::string, int); // CORE: "MUSICAL" DECISION MAKING METHOD
     
@@ -79,6 +82,8 @@ private:
     //		// specify a perform method manually:
     //		REGISTER_PERFORM(Example, perform);
     //	}
+    
+    char * myItoa(int, char*, int);
     
 };
 

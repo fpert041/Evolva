@@ -20,7 +20,7 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) :
         notesPerUpdate(2), // 2 note per 'bang' fow now
         notesInterval (500) // Set how many milliseconds between notes
 {
-    setupIO(2, 2);
+    setupIO(2, 5);
 #ifndef RANDOM_SEED
 #define RANDOM_SEED
     static const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
@@ -104,40 +104,30 @@ const void Evolva::run(){
 // (BANG) : called when a bang is received into an inlet
 void Evolva::bang(long inlet) {
     
-    //int i = 1 + (rand() % 6); /* random int between 1 and 6 */
-    //double d = rand()/RAND_MAX; /* random double-float between 0 and 1 */
     
-    // post(Goals::getSolution().c_str()); //DEBUGGING //
-    // post(myPopulation->getFittest()->toString().c_str()); //DEBUGGING //
-    // post(std::to_string( Goals::getMaxFitness() ).c_str()); //DEBUGGING //
     
-    // Evolve the population by one step until we reach an optimum solution
-    if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
-    {
-        myPopulation = Evolution::evolvePopulation(myPopulation);  // WATCH OUT * * * < Check there is appropriate variation/selevtion for evolutionary purposes - FITTEST's FITNESS DOES NOT SEEM TO GROW THAT WELL!
-        generationCount++;
-        std::string str = "Generation: " + std::to_string(generationCount) 
-                        +  " Fittest's fitness: " + std::to_string(myPopulation->getFittest()->getFitness())
-                        + " Maximum possible fitness: " + std::to_string(Goals::getMaxFitness());
-        post(str.c_str());
-    }
-    else
-    {
-        // Depending on your input, the result will be constant once the solution has been reached
-        post("Solution found!");
-        //			post( ("Generation: " + std::to_string(generationCount)).c_str() );
-        //          post(("Genes: " + myPopulation->getFittest()->toString()).c_str());
-    }
-    
-    // Set list of notes to play
-    notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate);
-    
-    outlet_anything(m_outlets[1], gensym(myPopulation->getFittest()->toString().c_str()), 0, NULL);
-    
-    // Play notes in a NEW THREAD:
-    mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
+    switch (inlet){
+        case (0):
+            
+            nextGeneration();
+            
+            // Set list of notes to play
+            notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate);
+            
+            outlet_anything(m_outlets[1], gensym(myPopulation->getFittest()->toString().c_str()), 0, NULL);
+            
+            // Play notes in a NEW THREAD:
+            mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
             // -> systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
-    
+            
+            break;
+            
+        case(1):
+            
+            nextGeneration();
+            
+            break;
+    }
     
     //post("bang in inlet %i!", inlet);
 }
@@ -185,7 +175,7 @@ void Evolva::inInt(long inlet, long v) {
 // Change the solution of the GA
 void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
 {
-    //if(inlet>0) return;
+    if(inlet>0) return;
     
     // post( std::to_string(atom_getfloat(av)).c_str() );
     
@@ -229,6 +219,42 @@ void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
 //---------------------------------------------------------------------------------------------
 // HELPER METHODS
 
+#include <stdio.h>
+#include <stdlib.h>
+
+// Evolve the population:
+void Evolva::nextGeneration()
+{
+    // int i = 1 + (rand() % 6); /* random int between 1 and 6 */
+    // double d = rand()/RAND_MAX; /* random double-float between 0 and 1 */
+ 
+    // Evolve the population by one step until we reach an optimum solution
+    if(myPopulation->getFittest()->getFitness() < Goals::getMaxFitness())
+    {
+        myPopulation = Evolution::evolvePopulation(myPopulation);  // WATCH OUT * * * < Check there is appropriate variation/selevtion for evolutionary purposes - FITTEST's FITNESS DOES NOT SEEM TO GROW THAT WELL!
+        generationCount++;
+        
+//        std::string str = "Generation: " + std::to_string(generationCount)
+//        +  " Fittest's fitness: " + std::to_string(myPopulation->getFittest()->getFitness())
+//        + " Maximum possible fitness: " + std::to_string(Goals::getMaxFitness());
+//        post(str.c_str());
+        
+        // Output inforamtion about the system
+        outlet_int(m_outlets[2], generationCount);  // current generation
+        outlet_int(m_outlets[3], myPopulation->getFittest()->getFitness()); // fittest's fitness value
+        outlet_int(m_outlets[4], Goals::getMaxFitness()); // maximum fitness value
+    }
+    else
+    {
+        // Depending on your input, the result will be constant once the solution has been reached
+        post("Solution found!");
+        //			post( ("Generation: " + std::to_string(generationCount)).c_str() );
+        //          post(("Genes: " + myPopulation->getFittest()->toString()).c_str());
+    }
+    
+}
+
+
 // Select and return a list of notes: PHENOTYPE
 std::vector<int> Evolva::chooseNotes(std::string fittest, int howManyNotes)
     // params: (fittest individual, n# of notes to play)
@@ -256,6 +282,37 @@ std::vector<int> Evolva::chooseNotes(std::string fittest, int howManyNotes)
     return notesToPlay;
 }
 
+// INTEGER TO CHAR* strings USING AN INPUT c-style char array AS A BUFFER
+char* Evolva::myItoa(int value, char* result, int base) {
+    // check that the base if valid
+    if (base < 2 || base > 36) { *result = '\0'; return result; }
+    
+    char* ptr = result, *ptr1 = result, tmp_char;
+    int tmp_value;
+    
+    // Lookup character based on their numerical value
+    // 0 is the 35th, negative values grow to the left, positive to the right
+    do {
+        tmp_value = value;
+        value /= base;
+        *ptr++ = "zyxwvutsrqponmlkjihgfedcba9876543210123456789abcdefghijklmnopqrstuvwxyz" [35 + (tmp_value - value * base)];
+    } while ( value );
+    
+    // Apply negative sign
+    if (tmp_value < 0) *ptr++ = '-';
+    
+    // Add string termination character
+    *ptr-- = '\0';
+    
+    // Flip string around
+    while(ptr1 < ptr) {
+        tmp_char = *ptr;
+        *ptr--= *ptr1;
+        *ptr1++ = tmp_char;
+    }
+    return result;
+}
+
 //---------------------------------------------------------------------------------------------
 
 
@@ -267,9 +324,9 @@ void Evolva::assist(void* b, long m, long a, char* s) { //template function that
     if (m == ASSIST_INLET) { //inlet
         switch (a) {
             case 0: sprintf(s,
-                            "\n'setSolution' + <string> : trigger change to current GA's solution using colour-names IDs 'red' 'green' 'blue' 'yellow' \n<int> : set n# of notes output at each update");
+                            "\n<bang> evolve population and output notes \n'setSolution' + <string> : trigger change to current GA's solution using colour-names IDs 'red' 'green' 'blue' 'yellow' \n<int> : set n# of notes output at each update");
                 break;
-            case 1: sprintf(s, "\n<int> : set ms between output notes");
+            case 1: sprintf(s, "\n<bang> evolve population \n<int> : set ms between output notes");
                 break;
         }
     }
@@ -277,7 +334,13 @@ void Evolva::assist(void* b, long m, long a, char* s) { //template function that
         switch (a) {
             case 0 : sprintf(s, "\nMIDI notes out");
                 break;
-            case 1 : sprintf(s, "\n--useless atm--");
+            case 1 : sprintf(s, "\n--fittest's genotype--");
+                break;
+            case 2 : sprintf(s, "\n--current generation count--");
+                break;
+            case 3 : sprintf(s, "\n--fittest individual's fitness value--");
+                break;
+            case 4 : sprintf(s, "\n--maximum fitness value--");
                 break;
         }
     }
