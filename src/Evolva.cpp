@@ -20,7 +20,7 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) :
         notesPerUpdate(2), // 2 note per 'bang' fow now
         notesInterval (500) // Set how many milliseconds between notes
 {
-    setupIO(2, 5);
+    setupIO(4, 5);
 #ifndef RANDOM_SEED
 #define RANDOM_SEED
     static const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
@@ -41,7 +41,7 @@ Evolva::~Evolva() {
 }
 
 
-/*****************************************THREADING TRIAL start snippet*********************************************/
+/***************************************** THREADING SECTION start *********************************************/
 
 t_systhread thread; // thread ID
 t_systhread_mutex	t_mutex; // mutual exclusion lock for threadsafety
@@ -95,7 +95,7 @@ const void Evolva::run(){
 
 
 
-/*****************************************THREADING TRIAL end snippet*********************************************/
+/***************************************** THREADING SECTION end *********************************************/
 
 //---------------------------------------------------------------------------------------------
 // INTERFACE
@@ -108,24 +108,22 @@ void Evolva::bang(long inlet) {
     
     switch (inlet){
         case (0):
-            
-            nextGeneration();
-            
-            // Set list of notes to play
-            notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate);
-            
-            outlet_anything(m_outlets[1], gensym(myPopulation->getFittest()->toString().c_str()), 0, NULL);
-            
-            // Play notes in a NEW THREAD:
-            mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
-            // -> systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
-            
+            nextGeneration(); // evolve the population
+            express(); // choose and load notes to be output
+            output(); // launch a new thread and out put notes
             break;
             
         case(1):
-            
             nextGeneration();
+            break;
             
+        case(2):
+            express();
+            break;
+            
+        case(3):
+            express();
+            output();
             break;
     }
     
@@ -181,18 +179,37 @@ void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
     
     // Implement logic to change solution here:
     char* newSolution =  atom_string(av);//atom_getsym(av)->s_name;
-    
-    if(strcmp(newSolution,"red")) {
-        newSol = "110010111001100000000000100000000000000000000000";
-    } else if(strcmp(newSolution,"blue")) {
-        newSol = "000000000000101101011010100000000000000000000000";
-    } else if(strcmp(newSolution,"green")) {
-        newSol = "000000000000000000000000101010110101100000000000";
-    } else if(strcmp(newSolution,"yellow")) {
-        newSol = "000000000000000000000000000000000000101011010101";
-    } else {
+    if(*newSolution == '\0') {
         post("Input string for 'newSolution(std::string)' is not recognized \nUse: 'red', 'blue', 'yellow' and 'green' instead");
         return;
+    }
+    
+    if(strcmp(newSolution,"red") == 0) {
+        newSol = "110010111001100000000000100000000000000000000000";
+    } else {
+        if(strcmp(newSolution,"blue") == 0) {
+            newSol = "000000000000101101011010100000000000000000000000";
+        } else {
+            if(strcmp(newSolution,"green") == 0) {
+                newSol = "000000000000000000000000101010110101100000000000";
+            } else {
+                if(strcmp(newSolution,"yellow") == 0) {
+                    newSol = "000000000000000000000000000000000000101011010101";
+                } else {
+                    int counter = 0;
+                    while(*newSolution != '\0') {
+                        if(*newSolution != '0' || *newSolution !='1') {
+                            post("Input string for 'newSolution(std::string)' is not recognized \nUse: 'red', 'blue', 'yellow' and 'green' instead");
+                            return;
+                        }
+                        newSolution++;
+                        counter++;
+                    }
+                    newSolution-=counter;
+                    newSol = *newSolution;
+                }
+            }
+        }
     }
     
     // Set new fitness string
@@ -240,6 +257,7 @@ void Evolva::nextGeneration()
 //        post(str.c_str());
         
         // Output inforamtion about the system
+        outlet_anything(m_outlets[1], gensym(myPopulation->getFittest()->toString().c_str()), 0, NULL);
         outlet_int(m_outlets[2], generationCount);  // current generation
         outlet_int(m_outlets[3], myPopulation->getFittest()->getFitness()); // fittest's fitness value
         outlet_int(m_outlets[4], Goals::getMaxFitness()); // maximum fitness value
@@ -252,6 +270,19 @@ void Evolva::nextGeneration()
         //          post(("Genes: " + myPopulation->getFittest()->toString()).c_str());
     }
     
+}
+ //
+void Evolva::express(){
+    // Set list of notes to play
+    notesToPlay = chooseNotes(myPopulation->getFittest()->toString(), notesPerUpdate);
+}
+
+// Output in a new thread
+void Evolva::output(){
+    
+    // Play notes in a NEW THREAD:
+    mcppthread_create(this, &thread); // pass object where to find appropriate run() function AND a thread ID address
+        // -> systhread_create( (method) threaded_func, this, 0, 0, 0, &thread );
 }
 
 
@@ -327,6 +358,10 @@ void Evolva::assist(void* b, long m, long a, char* s) { //template function that
                             "\n<bang> evolve population and output notes \n'setSolution' + <string> : trigger change to current GA's solution using colour-names IDs 'red' 'green' 'blue' 'yellow' \n<int> : set n# of notes output at each update");
                 break;
             case 1: sprintf(s, "\n<bang> evolve population \n<int> : set ms between output notes");
+                break;
+            case 2: sprintf(s, "\n<bang> choose notes to play and load output vector");
+                break;
+            case 3: sprintf(s, "\n<bang> choose notes to play and output them \n<int> : set ms between output notes");
                 break;
         }
     }

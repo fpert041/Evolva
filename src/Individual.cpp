@@ -62,10 +62,10 @@ Individual::Individual(std::string genotype){
     
     // Loop through each character of the input string and save it in our vector as an int
     for(int i=0; i<genotype.length(); ++i){
-        if(strncmp(&genotype[i], "1", 1)){
-           genes[i]=0;
-        } else {
+        if(strncmp(&genotype[i], "1", 1) == 0){
            genes[i]=1;
+        } else {
+           genes[i]=0;
         }
     }
 }
@@ -109,7 +109,7 @@ void Individual::newBeing(std::string genotype){
     genes = std::vector<int>(genotype.length()); // Genes-vector length re-initialised according to the input genotype
     
     for(int i=0; i<genes.size(); ++i){
-        if(strncmp(&genotype[i],"1", 1)){
+        if(strncmp(&genotype[i],"1", 1) == 0){
             genes[i] = floor(rand()/(double)RAND_MAX +0.85); // -> Allow random mutation but keep it unlikely
         }
     }

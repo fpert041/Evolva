@@ -29,9 +29,10 @@ namespace Goals{
         solution = std::vector<int>(newSolution.length());
         
         for (int i = 0; i < solution.size(); ++i){
-            solution[i] = strncmp(&newSolution[i],"0", 1) ? 0 : 1;
+            solution[i] = strncmp(&newSolution[i],"0", 1) == 0  ?  0 : 1;
         }
-        post("new solution set with a string");
+        post("new solution: ");
+        post(getSolution().c_str());
     }
     
     // Get optimum fitness

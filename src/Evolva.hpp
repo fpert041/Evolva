@@ -70,8 +70,14 @@ public:
     
 private:
     
-    // Evolve the population:
+    // Evolve the population
     void nextGeneration();
+    
+    // Map genotype onto a phenotype
+    void express();
+    
+    // Map genotype onto a phenotype
+    void output();
     
     // Select and return a list of notes
     std::vector<int> chooseNotes(std::string, int); // CORE: "MUSICAL" DECISION MAKING METHOD
