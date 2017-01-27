@@ -20,7 +20,7 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) :
         notesPerUpdate(2), // 2 note per 'bang' fow now
         notesInterval (500) // Set how many milliseconds between notes
 {
-    setupIO(4, 5);
+    setupIO(4, 6);
 #ifndef RANDOM_SEED
 #define RANDOM_SEED
     static const int seed = time(NULL); /* random seed global variable (make sure it is only defined once */
@@ -30,6 +30,11 @@ Evolva::Evolva(t_symbol * sym, long ac, t_atom * av) :
     //Initialize goal solution and population
     Goals::setSolution(solutionString);
     myPopulation.reset(new Population(100, originalPop));
+    
+    for(int i = 0; i<50; ++i){
+        myPopulation->getFittest()->newBeing();
+    }
+    
     // post(myPopulation->getFittest()->toString().c_str());
     
     notesToPlay = std::vector<int>();
@@ -90,7 +95,7 @@ void Evolva::thread_function(int notesPerUpdate, int notesInterval, std::vector<
 const void Evolva::run(){
     thread_function(notesPerUpdate, notesInterval, this->notesToPlay);
     
-    post("flag: circular threading works %i",notesPerUpdate);
+    // post("flag: circular threading works %i",notesPerUpdate);
 }
 
 
@@ -198,7 +203,7 @@ void Evolva::setSolution(long inlet, t_symbol * s, long ac, t_atom * av)
                 } else {
                     int counter = 0;
                     while(*newSolution != '\0') {
-                        if(*newSolution != '0' || *newSolution !='1') {
+                        if(*newSolution != '0' || *newSolution !='1' ) { // << this was supposed to get the string in from Max but it turns out Max does not allow you to have messages containing binary strings as a number -- think of something else :p
                             post("Input string for 'newSolution(std::string)' is not recognized \nUse: 'red', 'blue', 'yellow' and 'green' instead");
                             return;
                         }
@@ -261,11 +266,14 @@ void Evolva::nextGeneration()
         outlet_int(m_outlets[2], generationCount);  // current generation
         outlet_int(m_outlets[3], myPopulation->getFittest()->getFitness()); // fittest's fitness value
         outlet_int(m_outlets[4], Goals::getMaxFitness()); // maximum fitness value
+        outlet_int(m_outlets[5], 0);  // flag out that we have not reached an optimal fitness
     }
     else
     {
         // Depending on your input, the result will be constant once the solution has been reached
-        post("Solution found!");
+        outlet_int(m_outlets[5], 1);  // flag out that we reached an optimal fitness
+        
+        // post("Solution found!");
         //			post( ("Generation: " + std::to_string(generationCount)).c_str() );
         //          post(("Genes: " + myPopulation->getFittest()->toString()).c_str());
     }
@@ -376,6 +384,8 @@ void Evolva::assist(void* b, long m, long a, char* s) { //template function that
             case 3 : sprintf(s, "\n--fittest individual's fitness value--");
                 break;
             case 4 : sprintf(s, "\n--maximum fitness value--");
+                break;
+            case 5 : sprintf(s, "\n--flag: solution found--");
                 break;
         }
     }

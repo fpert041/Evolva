@@ -11,7 +11,7 @@
 
 /* GA parameters */
 const double Evolution::crossoverBias = 0.5;
-const double Evolution::mutationChance = 0.10;
+const double Evolution::mutationChance = 0.20;
 const int Evolution::fightersForSurvival = 50;
 bool Evolution::elitism = true;
 
@@ -27,7 +27,7 @@ std::shared_ptr<Population> Evolution::evolvePopulation(std::shared_ptr<Populati
     std::shared_ptr<Population> newPopulation(new Population(pop->size(), false));
    
     pop->mergeSort();
-    int leaders = 4;
+    int leaders = 1;
     
     // Keep the fittest
     if(elitism){
@@ -115,10 +115,11 @@ std::shared_ptr<Individual> Evolution::naturalSelection(std::shared_ptr<Populati
     Population genePool(fightersForSurvival, false);
     
     // For each place in the gene pool get a random individual from the input population
-    for(; i<fightersForSurvival/3; ++i){
-        genePool.saveIndividual(i, pop->getIndividual(i));
-        
-    } for (; i<fightersForSurvival; ++i){
+//    for(; i<fightersForSurvival/5; ++i){
+//        genePool.saveIndividual(i, pop->getIndividual(i));
+//        
+//    }
+    for (; i<fightersForSurvival; ++i){
         int randomIndex = rand() % pop->size();
         genePool.saveIndividual(i, pop->getIndividual(randomIndex));
     }
